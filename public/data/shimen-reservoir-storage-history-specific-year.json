@@ -1,0 +1,1286 @@
+[
+    {
+        "DataYear": 2002,
+        "DataDate": "01-01",
+        "TenDayNo": 1,
+        "EffectiveStorage": 15593.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "01-11",
+        "TenDayNo": 2,
+        "EffectiveStorage": 14873.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "01-21",
+        "TenDayNo": 3,
+        "EffectiveStorage": 14127.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "02-01",
+        "TenDayNo": 4,
+        "EffectiveStorage": 13415.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "02-11",
+        "TenDayNo": 5,
+        "EffectiveStorage": 12259.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "02-21",
+        "TenDayNo": 6,
+        "EffectiveStorage": 10648.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "03-01",
+        "TenDayNo": 7,
+        "EffectiveStorage": 8855.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "03-11",
+        "TenDayNo": 8,
+        "EffectiveStorage": 6973.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "03-21",
+        "TenDayNo": 9,
+        "EffectiveStorage": 5744.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "04-01",
+        "TenDayNo": 10,
+        "EffectiveStorage": 4834.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "04-11",
+        "TenDayNo": 11,
+        "EffectiveStorage": 4043.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "04-21",
+        "TenDayNo": 12,
+        "EffectiveStorage": 3227.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "05-01",
+        "TenDayNo": 13,
+        "EffectiveStorage": 1813.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "05-11",
+        "TenDayNo": 14,
+        "EffectiveStorage": 924.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "05-21",
+        "TenDayNo": 15,
+        "EffectiveStorage": 734.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "06-01",
+        "TenDayNo": 16,
+        "EffectiveStorage": 680.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "06-11",
+        "TenDayNo": 17,
+        "EffectiveStorage": 1026.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "06-21",
+        "TenDayNo": 18,
+        "EffectiveStorage": 1845.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "07-01",
+        "TenDayNo": 19,
+        "EffectiveStorage": 1952.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "07-11",
+        "TenDayNo": 20,
+        "EffectiveStorage": 22200.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "07-21",
+        "TenDayNo": 21,
+        "EffectiveStorage": 21271.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "08-01",
+        "TenDayNo": 22,
+        "EffectiveStorage": 20437.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "08-11",
+        "TenDayNo": 23,
+        "EffectiveStorage": 19622.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "08-21",
+        "TenDayNo": 24,
+        "EffectiveStorage": 18534.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "09-01",
+        "TenDayNo": 25,
+        "EffectiveStorage": 16845.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "09-11",
+        "TenDayNo": 26,
+        "EffectiveStorage": 20659.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "09-21",
+        "TenDayNo": 27,
+        "EffectiveStorage": 20875.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "10-01",
+        "TenDayNo": 28,
+        "EffectiveStorage": 20310.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "10-11",
+        "TenDayNo": 29,
+        "EffectiveStorage": 19146.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "10-21",
+        "TenDayNo": 30,
+        "EffectiveStorage": 17838.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "11-01",
+        "TenDayNo": 31,
+        "EffectiveStorage": 16902.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "11-11",
+        "TenDayNo": 32,
+        "EffectiveStorage": 15906.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "11-21",
+        "TenDayNo": 33,
+        "EffectiveStorage": 14873.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "12-01",
+        "TenDayNo": 34,
+        "EffectiveStorage": 13961.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "12-11",
+        "TenDayNo": 35,
+        "EffectiveStorage": 13199.0
+    },
+    {
+        "DataYear": 2002,
+        "DataDate": "12-21",
+        "TenDayNo": 36,
+        "EffectiveStorage": 12431.0
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "01-21",
+        "TenDayNo": 3,
+        "EffectiveStorage": 12401.29
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "02-01",
+        "TenDayNo": 4,
+        "EffectiveStorage": 11671.7
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "02-11",
+        "TenDayNo": 5,
+        "EffectiveStorage": 11033.16
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "02-21",
+        "TenDayNo": 6,
+        "EffectiveStorage": 9898.77
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "03-01",
+        "TenDayNo": 7,
+        "EffectiveStorage": 8683.35
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "03-11",
+        "TenDayNo": 8,
+        "EffectiveStorage": 7519.9
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "03-21",
+        "TenDayNo": 9,
+        "EffectiveStorage": 6463.07
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "04-01",
+        "TenDayNo": 10,
+        "EffectiveStorage": 6180.51
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "04-11",
+        "TenDayNo": 11,
+        "EffectiveStorage": 7924.44
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "04-21",
+        "TenDayNo": 12,
+        "EffectiveStorage": 8571.3
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "05-01",
+        "TenDayNo": 13,
+        "EffectiveStorage": 8031.97
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "05-11",
+        "TenDayNo": 14,
+        "EffectiveStorage": 7007.62
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "05-21",
+        "TenDayNo": 15,
+        "EffectiveStorage": 6234.04
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "06-01",
+        "TenDayNo": 16,
+        "EffectiveStorage": 5400.51
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "06-11",
+        "TenDayNo": 17,
+        "EffectiveStorage": 4870.37
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "06-21",
+        "TenDayNo": 18,
+        "EffectiveStorage": 7317.25
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "07-01",
+        "TenDayNo": 19,
+        "EffectiveStorage": 9473.91
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "07-11",
+        "TenDayNo": 20,
+        "EffectiveStorage": 9392.18
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "07-21",
+        "TenDayNo": 21,
+        "EffectiveStorage": 8810.93
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "08-01",
+        "TenDayNo": 22,
+        "EffectiveStorage": 7339.63
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "08-11",
+        "TenDayNo": 23,
+        "EffectiveStorage": 5681.15
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "08-21",
+        "TenDayNo": 24,
+        "EffectiveStorage": 5168.02
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "09-01",
+        "TenDayNo": 25,
+        "EffectiveStorage": 4790.0
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "09-11",
+        "TenDayNo": 26,
+        "EffectiveStorage": 8003.85
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "09-21",
+        "TenDayNo": 27,
+        "EffectiveStorage": 12012.96
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "10-01",
+        "TenDayNo": 28,
+        "EffectiveStorage": 12065.51
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "10-11",
+        "TenDayNo": 29,
+        "EffectiveStorage": 12200.38
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "10-21",
+        "TenDayNo": 30,
+        "EffectiveStorage": 11861.88
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "11-01",
+        "TenDayNo": 31,
+        "EffectiveStorage": 10750.92
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "11-11",
+        "TenDayNo": 32,
+        "EffectiveStorage": 9245.01
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "11-21",
+        "TenDayNo": 33,
+        "EffectiveStorage": 8258.83
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "12-01",
+        "TenDayNo": 34,
+        "EffectiveStorage": 8493.83
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "12-11",
+        "TenDayNo": 35,
+        "EffectiveStorage": 8556.76
+    },
+    {
+        "DataYear": 2003,
+        "DataDate": "12-21",
+        "TenDayNo": 36,
+        "EffectiveStorage": 7863.99
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "01-01",
+        "TenDayNo": 1,
+        "EffectiveStorage": 7161.58
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "01-11",
+        "TenDayNo": 2,
+        "EffectiveStorage": 6192.84
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "01-21",
+        "TenDayNo": 3,
+        "EffectiveStorage": 5304.64
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "02-01",
+        "TenDayNo": 4,
+        "EffectiveStorage": 5044.25
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "02-11",
+        "TenDayNo": 5,
+        "EffectiveStorage": 7344.11
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "02-21",
+        "TenDayNo": 6,
+        "EffectiveStorage": 8263.6
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "03-01",
+        "TenDayNo": 7,
+        "EffectiveStorage": 8022.59
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "03-11",
+        "TenDayNo": 8,
+        "EffectiveStorage": 8595.61
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "03-21",
+        "TenDayNo": 9,
+        "EffectiveStorage": 8493.83
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "04-01",
+        "TenDayNo": 10,
+        "EffectiveStorage": 9074.04
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "04-11",
+        "TenDayNo": 11,
+        "EffectiveStorage": 11083.28
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "04-21",
+        "TenDayNo": 12,
+        "EffectiveStorage": 11477.44
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "05-01",
+        "TenDayNo": 13,
+        "EffectiveStorage": 11443.36
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "05-11",
+        "TenDayNo": 14,
+        "EffectiveStorage": 11189.52
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "05-21",
+        "TenDayNo": 15,
+        "EffectiveStorage": 12247.49
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "06-01",
+        "TenDayNo": 16,
+        "EffectiveStorage": 15170.43
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "06-11",
+        "TenDayNo": 17,
+        "EffectiveStorage": 15810.5
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "06-21",
+        "TenDayNo": 18,
+        "EffectiveStorage": 15790.05
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "07-01",
+        "TenDayNo": 19,
+        "EffectiveStorage": 15203.7
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "07-11",
+        "TenDayNo": 20,
+        "EffectiveStorage": 20137.0
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "07-21",
+        "TenDayNo": 21,
+        "EffectiveStorage": 19738.18
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "08-01",
+        "TenDayNo": 22,
+        "EffectiveStorage": 18295.19
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "08-11",
+        "TenDayNo": 23,
+        "EffectiveStorage": 17765.0
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "08-21",
+        "TenDayNo": 24,
+        "EffectiveStorage": 21392.96
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "09-01",
+        "TenDayNo": 25,
+        "EffectiveStorage": 20859.28
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "09-11",
+        "TenDayNo": 26,
+        "EffectiveStorage": 20827.0
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "09-21",
+        "TenDayNo": 27,
+        "EffectiveStorage": 21384.81
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "10-01",
+        "TenDayNo": 28,
+        "EffectiveStorage": 21515.37
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "10-11",
+        "TenDayNo": 29,
+        "EffectiveStorage": 21794.4
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "10-21",
+        "TenDayNo": 30,
+        "EffectiveStorage": 22092.18
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "11-01",
+        "TenDayNo": 31,
+        "EffectiveStorage": 22400.77
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "11-11",
+        "TenDayNo": 32,
+        "EffectiveStorage": 22957.62
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "11-21",
+        "TenDayNo": 33,
+        "EffectiveStorage": 22771.09
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "12-01",
+        "TenDayNo": 34,
+        "EffectiveStorage": 22434.29
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "12-11",
+        "TenDayNo": 35,
+        "EffectiveStorage": 23548.61
+    },
+    {
+        "DataYear": 2004,
+        "DataDate": "12-21",
+        "TenDayNo": 36,
+        "EffectiveStorage": 23204.91
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "01-01",
+        "TenDayNo": 1,
+        "EffectiveStorage": 18857.06
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "01-11",
+        "TenDayNo": 2,
+        "EffectiveStorage": 16504.43
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "01-21",
+        "TenDayNo": 3,
+        "EffectiveStorage": 15930.33
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "02-01",
+        "TenDayNo": 4,
+        "EffectiveStorage": 15658.9
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "02-11",
+        "TenDayNo": 5,
+        "EffectiveStorage": 14385.89
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "02-21",
+        "TenDayNo": 6,
+        "EffectiveStorage": 12417.06
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "03-01",
+        "TenDayNo": 7,
+        "EffectiveStorage": 10724.96
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "03-11",
+        "TenDayNo": 8,
+        "EffectiveStorage": 10488.78
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "03-21",
+        "TenDayNo": 9,
+        "EffectiveStorage": 9722.27
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "04-01",
+        "TenDayNo": 10,
+        "EffectiveStorage": 12417.06
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "04-11",
+        "TenDayNo": 11,
+        "EffectiveStorage": 13529.08
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "04-21",
+        "TenDayNo": 12,
+        "EffectiveStorage": 17014.19
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "05-01",
+        "TenDayNo": 13,
+        "EffectiveStorage": 18334.8
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "05-11",
+        "TenDayNo": 14,
+        "EffectiveStorage": 19166.6
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "05-21",
+        "TenDayNo": 15,
+        "EffectiveStorage": 18030.74
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "06-01",
+        "TenDayNo": 16,
+        "EffectiveStorage": 18286.6
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "06-11",
+        "TenDayNo": 17,
+        "EffectiveStorage": 19835.1
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "06-21",
+        "TenDayNo": 18,
+        "EffectiveStorage": 20457.58
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "07-01",
+        "TenDayNo": 19,
+        "EffectiveStorage": 19373.98
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "07-11",
+        "TenDayNo": 20,
+        "EffectiveStorage": 19936.6
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "07-21",
+        "TenDayNo": 21,
+        "EffectiveStorage": 18439.54
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "08-01",
+        "TenDayNo": 22,
+        "EffectiveStorage": 19717.1
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "08-11",
+        "TenDayNo": 23,
+        "EffectiveStorage": 18935.99
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "08-21",
+        "TenDayNo": 24,
+        "EffectiveStorage": 18650.1
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "09-01",
+        "TenDayNo": 25,
+        "EffectiveStorage": 17533.55
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "09-11",
+        "TenDayNo": 26,
+        "EffectiveStorage": 19524.15
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "09-21",
+        "TenDayNo": 27,
+        "EffectiveStorage": 20699.52
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "10-01",
+        "TenDayNo": 28,
+        "EffectiveStorage": null
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "10-11",
+        "TenDayNo": 29,
+        "EffectiveStorage": 20908.31
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "10-21",
+        "TenDayNo": 30,
+        "EffectiveStorage": 19307.5
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "11-01",
+        "TenDayNo": 31,
+        "EffectiveStorage": 17307.57
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "11-11",
+        "TenDayNo": 32,
+        "EffectiveStorage": 16048.59
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "11-21",
+        "TenDayNo": 33,
+        "EffectiveStorage": 15347.04
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "12-01",
+        "TenDayNo": 34,
+        "EffectiveStorage": 15506.12
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "12-11",
+        "TenDayNo": 35,
+        "EffectiveStorage": 15296.64
+    },
+    {
+        "DataYear": 2006,
+        "DataDate": "12-21",
+        "TenDayNo": 36,
+        "EffectiveStorage": 16384.1
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "01-01",
+        "TenDayNo": 1,
+        "EffectiveStorage": 11202.46
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "01-11",
+        "TenDayNo": 2,
+        "EffectiveStorage": 10421.9
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "01-21",
+        "TenDayNo": 3,
+        "EffectiveStorage": 9572.72
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "02-01",
+        "TenDayNo": 4,
+        "EffectiveStorage": 8492.37
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "02-11",
+        "TenDayNo": 5,
+        "EffectiveStorage": 7450.56
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "02-21",
+        "TenDayNo": 6,
+        "EffectiveStorage": 6557.45
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "03-01",
+        "TenDayNo": 7,
+        "EffectiveStorage": 5710.54
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "03-11",
+        "TenDayNo": 8,
+        "EffectiveStorage": 4570.76
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "03-21",
+        "TenDayNo": 9,
+        "EffectiveStorage": 4180.88
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "04-01",
+        "TenDayNo": 10,
+        "EffectiveStorage": 5088.04
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "04-11",
+        "TenDayNo": 11,
+        "EffectiveStorage": 4923.88
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "04-21",
+        "TenDayNo": 12,
+        "EffectiveStorage": 4851.98
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "05-01",
+        "TenDayNo": 13,
+        "EffectiveStorage": 4560.4
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "05-11",
+        "TenDayNo": 14,
+        "EffectiveStorage": 6016.06
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "05-21",
+        "TenDayNo": 15,
+        "EffectiveStorage": 7269.87
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "06-01",
+        "TenDayNo": 16,
+        "EffectiveStorage": 11051.84
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "06-11",
+        "TenDayNo": 17,
+        "EffectiveStorage": 11166.19
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "06-21",
+        "TenDayNo": 18,
+        "EffectiveStorage": 11003.92
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "07-01",
+        "TenDayNo": 19,
+        "EffectiveStorage": 12159.37
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "07-11",
+        "TenDayNo": 20,
+        "EffectiveStorage": 17228.73
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "07-21",
+        "TenDayNo": 21,
+        "EffectiveStorage": 18280.04
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "08-01",
+        "TenDayNo": 22,
+        "EffectiveStorage": 18961.04
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "08-11",
+        "TenDayNo": 23,
+        "EffectiveStorage": 19502.0
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "08-21",
+        "TenDayNo": 24,
+        "EffectiveStorage": 18155.7
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "09-01",
+        "TenDayNo": 25,
+        "EffectiveStorage": 18969.55
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "09-11",
+        "TenDayNo": 26,
+        "EffectiveStorage": 18538.75
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "09-21",
+        "TenDayNo": 27,
+        "EffectiveStorage": 18698.49
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "10-01",
+        "TenDayNo": 28,
+        "EffectiveStorage": 18647.95
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "10-11",
+        "TenDayNo": 29,
+        "EffectiveStorage": 18944.03
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "10-21",
+        "TenDayNo": 30,
+        "EffectiveStorage": 19406.84
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "11-01",
+        "TenDayNo": 31,
+        "EffectiveStorage": 18808.3
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "11-11",
+        "TenDayNo": 32,
+        "EffectiveStorage": 17990.78
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "11-21",
+        "TenDayNo": 33,
+        "EffectiveStorage": 16816.34
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "12-01",
+        "TenDayNo": 34,
+        "EffectiveStorage": 15602.86
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "12-11",
+        "TenDayNo": 35,
+        "EffectiveStorage": 15003.47
+    },
+    {
+        "DataYear": 2015,
+        "DataDate": "12-21",
+        "TenDayNo": 36,
+        "EffectiveStorage": 14404.98
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "01-01",
+        "TenDayNo": 1,
+        "EffectiveStorage": 13075.56
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "01-11",
+        "TenDayNo": 2,
+        "EffectiveStorage": 13102.05
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "01-21",
+        "TenDayNo": 3,
+        "EffectiveStorage": 13088.8
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "02-01",
+        "TenDayNo": 4,
+        "EffectiveStorage": 12482.17
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "02-11",
+        "TenDayNo": 5,
+        "EffectiveStorage": 11542.63
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "02-21",
+        "TenDayNo": 6,
+        "EffectiveStorage": 11126.28
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "03-01",
+        "TenDayNo": 7,
+        "EffectiveStorage": 10237.9
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "03-11",
+        "TenDayNo": 8,
+        "EffectiveStorage": 9375.08
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "03-21",
+        "TenDayNo": 9,
+        "EffectiveStorage": 8104.55
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "04-01",
+        "TenDayNo": 10,
+        "EffectiveStorage": 7217.35
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "04-11",
+        "TenDayNo": 11,
+        "EffectiveStorage": 6137.43
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "04-21",
+        "TenDayNo": 12,
+        "EffectiveStorage": 4505.51
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "05-01",
+        "TenDayNo": 13,
+        "EffectiveStorage": 4231.8
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "05-11",
+        "TenDayNo": 14,
+        "EffectiveStorage": 3234.63
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "05-21",
+        "TenDayNo": 15,
+        "EffectiveStorage": 2036.82
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "06-01",
+        "TenDayNo": 16,
+        "EffectiveStorage": 2933.64
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "06-11",
+        "TenDayNo": 17,
+        "EffectiveStorage": 8398.51
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "06-21",
+        "TenDayNo": 18,
+        "EffectiveStorage": 11097.62
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "07-01",
+        "TenDayNo": 19,
+        "EffectiveStorage": 14627.46
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "07-11",
+        "TenDayNo": 20,
+        "EffectiveStorage": 15713.43
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "07-21",
+        "TenDayNo": 21,
+        "EffectiveStorage": 14983.87
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "08-01",
+        "TenDayNo": 22,
+        "EffectiveStorage": 19849.36
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "08-11",
+        "TenDayNo": 23,
+        "EffectiveStorage": 19492.17
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "08-21",
+        "TenDayNo": 24,
+        "EffectiveStorage": 19687.77
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "09-01",
+        "TenDayNo": 25,
+        "EffectiveStorage": 20104.49
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "09-11",
+        "TenDayNo": 26,
+        "EffectiveStorage": 19207.21
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "09-21",
+        "TenDayNo": 27,
+        "EffectiveStorage": 20361.53
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "10-01",
+        "TenDayNo": 28,
+        "EffectiveStorage": 20396.24
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "10-11",
+        "TenDayNo": 29,
+        "EffectiveStorage": 20164.02
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "10-21",
+        "TenDayNo": 30,
+        "EffectiveStorage": 20326.82
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "11-01",
+        "TenDayNo": 31,
+        "EffectiveStorage": 20378.88
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "11-11",
+        "TenDayNo": 32,
+        "EffectiveStorage": 20344.17
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "11-21",
+        "TenDayNo": 33,
+        "EffectiveStorage": 20036.45
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "12-01",
+        "TenDayNo": 34,
+        "EffectiveStorage": 20232.05
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "12-11",
+        "TenDayNo": 35,
+        "EffectiveStorage": 20044.96
+    },
+    {
+        "DataYear": 2021,
+        "DataDate": "12-21",
+        "TenDayNo": 36,
+        "EffectiveStorage": 19917.39
+    }
+]

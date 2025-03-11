@@ -1,0 +1,332 @@
+[
+    {
+        "StationNo": "10201",
+        "time": "2025-01-04T10:00:00",
+        "EffectiveStorage": 20372.25
+    },
+    {
+        "StationNo": "10201",
+        "time": "2025-01-03T23:00:00",
+        "EffectiveStorage": 20355.14
+    },
+    {
+        "StationNo": "10201",
+        "time": "2025-01-02T22:00:00",
+        "EffectiveStorage": 20329.57
+    },
+    {
+        "StationNo": "10201",
+        "time": "2025-01-01T23:00:00",
+        "EffectiveStorage": 20312.46
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-31T23:00:00",
+        "EffectiveStorage": 20363.70
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-30T22:00:00",
+        "EffectiveStorage": 20457.70
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-29T22:00:00",
+        "EffectiveStorage": 20526.04
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-28T23:00:00",
+        "EffectiveStorage": 20526.04
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-27T22:00:00",
+        "EffectiveStorage": 20534.68
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-26T23:00:00",
+        "EffectiveStorage": 20534.68
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-25T22:00:00",
+        "EffectiveStorage": 20543.41
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-24T23:00:00",
+        "EffectiveStorage": 20491.83
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-23T22:00:00",
+        "EffectiveStorage": 20414.93
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-22T22:00:00",
+        "EffectiveStorage": 20406.38
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-21T23:00:00",
+        "EffectiveStorage": 20432.04
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-20T22:00:00",
+        "EffectiveStorage": 20449.15
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-19T23:00:00",
+        "EffectiveStorage": 20483.28
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-18T22:00:00",
+        "EffectiveStorage": 20526.04
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-17T23:00:00",
+        "EffectiveStorage": 20543.41
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-16T22:00:00",
+        "EffectiveStorage": 20560.78
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-15T23:00:00",
+        "EffectiveStorage": 20552.05
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-14T22:00:00",
+        "EffectiveStorage": 20543.41
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-13T23:00:00",
+        "EffectiveStorage": 20534.68
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-12T22:00:00",
+        "EffectiveStorage": 20534.68
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-11T23:00:00",
+        "EffectiveStorage": 20526.04
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-10T22:00:00",
+        "EffectiveStorage": 20560.78
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-09T23:00:00",
+        "EffectiveStorage": 20569.42
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-08T23:00:00",
+        "EffectiveStorage": 20543.41
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-07T22:00:00",
+        "EffectiveStorage": 20543.41
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-06T23:00:00",
+        "EffectiveStorage": 20543.41
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-05T23:00:00",
+        "EffectiveStorage": 20543.38
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-04T22:00:00",
+        "EffectiveStorage": 20543.41
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-03T23:00:00",
+        "EffectiveStorage": 20534.69
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-02T23:00:00",
+        "EffectiveStorage": 20534.69
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-12-01T23:00:00",
+        "EffectiveStorage": 20526.01
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-30T23:00:00",
+        "EffectiveStorage": 20474.75
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-29T23:00:00",
+        "EffectiveStorage": 20449.13
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-28T23:00:00",
+        "EffectiveStorage": 20466.21
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-27T23:00:00",
+        "EffectiveStorage": 20449.13
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-26T23:00:00",
+        "EffectiveStorage": 20483.29
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-25T23:00:00",
+        "EffectiveStorage": 20483.29
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-24T23:00:00",
+        "EffectiveStorage": 20457.67
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-23T23:00:00",
+        "EffectiveStorage": 20449.13
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-22T23:00:00",
+        "EffectiveStorage": 20466.21
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-21T23:00:00",
+        "EffectiveStorage": 20449.13
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-20T23:00:00",
+        "EffectiveStorage": 20466.21
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-19T23:00:00",
+        "EffectiveStorage": 20474.75
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-18T23:00:00",
+        "EffectiveStorage": 20466.21
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-17T23:00:00",
+        "EffectiveStorage": 20389.33
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-16T23:00:00",
+        "EffectiveStorage": 20389.33
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-15T23:00:00",
+        "EffectiveStorage": 20397.87
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-14T23:00:00",
+        "EffectiveStorage": 20423.50
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-13T23:00:00",
+        "EffectiveStorage": 20491.84
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-12T23:00:00",
+        "EffectiveStorage": 20483.29
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-11T23:00:00",
+        "EffectiveStorage": 20491.84
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-10T23:00:00",
+        "EffectiveStorage": 20491.84
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-09T23:00:00",
+        "EffectiveStorage": 20552.06
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-08T23:00:00",
+        "EffectiveStorage": 20534.69
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-07T23:00:00",
+        "EffectiveStorage": 20543.37
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-06T23:00:00",
+        "EffectiveStorage": 20517.46
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-05T23:00:00",
+        "EffectiveStorage": 20508.93
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-04T23:00:00",
+        "EffectiveStorage": 20526.01
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-03T23:00:00",
+        "EffectiveStorage": 20167.24
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-02T23:00:00",
+        "EffectiveStorage": 19528.82
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-11-01T23:00:00",
+        "EffectiveStorage": 19748.67
+    },
+    {
+        "StationNo": "10201",
+        "time": "2024-10-31T23:00:00",
+        "EffectiveStorage": 18764.67
+    }
+]
