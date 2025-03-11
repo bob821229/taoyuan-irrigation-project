@@ -127,7 +127,7 @@
             </template>
         </Card>
         <div class="col-12" style="display: flex;justify-content: space-between;align-items: center;">
-            <h3 class="mb-0">埤塘水情</h3>
+            <h3 class="mb-0" >埤塘水情</h3>
             <Button @click="clickGetResult">確定模擬</Button>
         </div>
     </div>
@@ -154,7 +154,7 @@
                         </div>
                     </template>
                     <template #content>
-                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo1 }">
+                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo1 }" @wheel="handleWheelScroll">
                             <div class="row" :class="{ 'nowrap': !showAllPoundInfo1 }">
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-3" v-for="p in poundInfoList2"
                                     :key="p.ChannelName">
@@ -187,7 +187,7 @@
                         </div>
                     </template>
                     <template #content>
-                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo2 }">
+                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo2 }" @wheel="handleWheelScroll">
                             <div class="row" :class="{ 'nowrap': !showAllPoundInfo2 }">
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-3" v-for="p in poundInfoList"
                                     :key="p.ChannelName">
@@ -229,6 +229,13 @@ const showAllPoundInfo1 = ref(false)
 const showAllPoundInfo2 = ref(false)
 const poundInfoList = ref(null)
 const poundInfoList2 = ref(null)
+const handleWheelScroll = (event) => {
+  const container = event.currentTarget;
+  if (container.scrollWidth > container.clientWidth) {
+    event.preventDefault(); // 阻止預設滾動行為（避免垂直滾動）
+    container.scrollLeft += event.deltaY; // 讓滾輪上下滾動轉為左右滾動
+  }
+};
 //取得 埤塘資訊
 async function getPoundInfoByIrrigation() {
     try {
