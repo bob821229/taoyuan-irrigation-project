@@ -1,8 +1,8 @@
 <template>
     <div class="text-center wrap">
-        <div class="block" @click="goToIrrigationDistrictSVGView()">
-        </div>
-        <img src="/images/IrrigationDistrictListSVGView.png" alt="">
+        <!-- <div class="block" @click="goToIrrigationDistrictSVGView()">
+        </div> -->
+        <!-- <img src="/images/IrrigationDistrictListSVGView.png" alt="" > -->
         <!-- <img src="/images/桃園管理處_湖口工作站V5(轉外框)_01.svg" alt="SVG Image" width="200" height="200"> -->
         <div class="svg_container">
             <svg id="_圖層_1" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 542">
@@ -1673,93 +1673,106 @@ const router = useRouter();
 function goToIrrigationDistrictSVGView() {
     router.push('/IrrigationDistrictSVGView?q=桃三')
 }
-const mappingList=ref([
+const mappingList = ref([
     {
         name: '桃一',
         key: 'i1',
-        type:'irrigationArea',
-        灌區:'桃一'
+        type: 'irrigationArea',
+        灌區: '桃一'
     },
     {
         name: '桃二',
         key: 'i2',
-        type:'irrigationArea',
-        灌區:'桃一'
+        type: 'irrigationArea',
+        灌區: '桃一'
     },
     {
         name: '桃三',
         key: 'i3',
-        type:'irrigationArea',
-        灌區:'桃一'
+        type: 'irrigationArea',
+        灌區: '桃一'
     },
     {
         name: '石一',
         key: 'i4',
-        type:'irrigationArea',
-        灌區:'桃一'
+        type: 'irrigationArea',
+        灌區: '桃一'
     },
     {
         name: '石二',
         key: 'i5',
-        type:'irrigationArea',
-        灌區:'桃一'
+        type: 'irrigationArea',
+        灌區: '桃一'
     },
     {
         name: '湖口站',
         key: 'w1',
-        type:'workstation',
-        灌區:'桃一'
+        type: 'workstation',
+        灌區: '桃一',
+
     },
     {
         name: '新屋站',
         key: 'w2',
-        type:'workstation',
-        灌區:'桃一'
+        type: 'workstation',
+        灌區: '桃一',
+
     },
     {
         name: '新豐溪',
         key: 's1',
-        type:'stream',
-        灌區:'桃一'
+        type: 'stream',
+        灌區: '桃一'
     },
     {
         name: '福興溪',
         key: 's2',
-        type:'stream',
-        灌區:'桃一'
+        type: 'stream',
+        灌區: '桃一'
     },
     {
         name: '社子溪',
         key: 's3',
-        type:'stream',
-        灌區:'桃一'
+        type: 'stream',
+        灌區: '桃一'
     },
     {
         name: '13支線',
         key: 'b1',
-        type:'branch',
-        灌區:'桃一'
+        type: 'branch',
+        工作站: '湖口站',
+        灌區: '桃一'
     },
     {
         name: '11支線',
         key: 'b2',
-        type:'branch',
-        灌區:'桃一'
+        type: 'branch',
+        工作站: '湖口站',
+        灌區: '桃一'
     },
 ])
 onMounted(async () => {
-    mappingList.value.forEach(async (item) => {        
-       // 根據 name 屬性找到對應的 <g> 標籤
+    mappingList.value.forEach(async (item) => {
+        // 根據 name 屬性找到對應的 <g> 標籤
         const gElement = document.querySelector(`g[id="${item.name}"]`);
-        if(gElement){
+        if (gElement) {
             // 添加 key 和 type 屬性
-          gElement.setAttribute('data-key', item.key);
-          gElement.setAttribute('data-type', item.type);
-          gElement.setAttribute('data-irrigation-area', item['灌區']);
-          // 綁定點擊事件
-          gElement.addEventListener('click', () => {
-            alert(`名稱 : ${item.name}, Key : ${item.key}, 類別 : ${item.type}`);
-          });
+            gElement.setAttribute('data-key', item.key);
+            gElement.setAttribute('data-type', item.type);
+            gElement.setAttribute('data-irrigation-area', item['灌區']);
+            // 綁定點擊事件
+            gElement.addEventListener('click', () => {
+                alert(`名稱 : ${item.name}, Key : ${item.key}, 類別 : ${item.type}`);
+                router.push({
+                    name: 'IrrigationDistrictSVGView',
+                    query: {
+                        name: item.name,
+                        key: item.key,
+                        type: item.type
+                    }
+                }
+                )
+            });
         }
     })
 
@@ -1847,10 +1860,12 @@ img {
 .block1 {
     cursor: pointer;
 }
-g{
+
+g {
     cursor: pointer;
 
 }
+
 .block1:hover polygon,
 .block1:hover path {
     fill: rgba(69, 189, 35, 0.2);
