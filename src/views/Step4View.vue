@@ -1,11 +1,23 @@
 <template>
+     <Drawer style="width: 100vw;" v-model:visible="visibleLeft" header="整田期錯開說明" position="left">
+        <iframe src="https://tiwrar-my.sharepoint.com/personal/johnny_chen_triwra_org_tw/_layouts/15/Doc.aspx?sourcedoc={5c76151a-4815-4576-a344-7860712b0d98}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+                style="width: 100%; height: 100%" frameborder="0">
+                <!-- 這是 <a target="_blank" href="https://office.com/webapps">Office</a> 提供的內嵌 <a target="_blank" href="https://office.com">Microsoft Office</a> 簡報。 -->
+            </iframe>
+    </Drawer>
     <div class="row">
+        
         <div class="col-12">
             <Card class='mb-2' style="">
                 <template #header></template>
                 <template #title></template>
                 <!--<template #subtitle>Card subtitle</template>-->
                 <template #content>
+                    <div class="col-12 text-end">
+                        <!-- <span  @click="visibleLeft = true" class="pi pi-file-pdf" /> -->
+                        <span  @click="visibleLeft = true" class="pi pi-book" />
+                        <!-- <Button icon="pi pi-file-pdf" @click="visibleLeft = true"></Button> -->
+                    </div>
                     <SimpleEchart :chart-width="'100%'" :chart-height="'80vh'"
                         :chart-x-axis="scatterChartOptionData.chartXAxis"
                         :chart-y-axis="scatterChartOptionData.chartYAxis"
@@ -48,6 +60,7 @@ import axios from 'axios';
 import Enumerable from 'linq'
 
 import { RouterLink, RouterView, useRouter } from 'vue-router'
+const visibleLeft = ref(false);
 // 取得路由
 const router = useRouter();
 //上一步
@@ -293,6 +306,9 @@ async function chartClickCallback(param) {
 </script>
 
 <style scoped lang="scss">
+.pi {
+    cursor: pointer;
+}
 .btn_wrap {
     display: flex;
     justify-content: space-between;

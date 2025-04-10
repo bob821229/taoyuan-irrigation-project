@@ -13,7 +13,7 @@
                     <div class="col-12">
                         <div class="water-jar-wrap">
                             <ui-water-jar :value="props.value" :color="waterColor"></ui-water-jar>
-                            <span class="water-jar-value">
+                            <span class="water-jar-value" >
                                 {{ value }}%
                             </span>
                         </div>
@@ -98,5 +98,7 @@ const props = defineProps({
     font-weight: bold;
     color: #fff;
     z-index: 10;
+    text-shadow: 2px 2px 3px #606060;
+    // -webkit-text-stroke: 0.6px black;
 }
 </style>

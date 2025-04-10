@@ -264,7 +264,7 @@ const MapStyle = {
             { key: '6', description: '組別代碼' },
         ],
 
-        'original': {
+        original: {
             symbol: {
                 //color: [0, 0, 255, 0.5],
                 type: 'simple-fill',
@@ -366,8 +366,9 @@ const MapStyle = {
                         weight: "bolder"
                     }
                 },
-                // //minScale: 80000,  //city range
-                // minScale: 80000,
+                maxScale: 300000 // 1:300,000 以上（較遠）時顯示，放大後消失
+                // minScale: 80000,  //city range
+                // minScale: 300000,
                 // maxScale: 0,
             },
         ], 
@@ -400,9 +401,11 @@ const MapStyle = {
                             weight: "bolder"
                         }
                     },
+                    
                     //minScale: 80000,  //city range
                     minScale: 300000,
-                    maxScale: 90000,
+                    maxScale: 0,
+                    // maxScale: 50000,
                 },
             ], 
         },
@@ -430,8 +433,8 @@ const MapStyle = {
                         }
                     },
                     //minScale: 80000,  //city range
-                    minScale: 300000,
-                    maxScale: 90000,
+                    minScale: 300000, // 1:300,000 以下（較近）時顯示，縮小後消失
+                    // maxScale: 90000 // 1:90,000 以上可見，放大超過 1:90,000 後消失
                 },
             ], 
         },

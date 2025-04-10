@@ -19,6 +19,8 @@ import Card from "primevue/card"
 import Drawer from 'primevue/drawer';
 import Tooltip from 'primevue/tooltip';
 import ToggleSwitch from 'primevue/toggleswitch';
+import RadioButton from 'primevue/radiobutton';
+
 // Icons css
 import 'primeicons/primeicons.css'
 
@@ -50,6 +52,7 @@ app.component('Button', Button);
 app.component('Card', Card);
 app.component('Drawer', Drawer);
 app.component('ToggleSwitch', ToggleSwitch);
+app.component('RadioButton', RadioButton);
 app.directive('tooltip', Tooltip);
 app.use(createPinia())
 app.use(router)

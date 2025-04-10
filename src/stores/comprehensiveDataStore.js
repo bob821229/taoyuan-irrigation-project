@@ -267,6 +267,7 @@ export const useComprehensiveDataStore = defineStore(
                 },
             ],
         });
+        const echartsFontSize = ref(20);
         // 種植密度對應文字
         const baseDataPathTxt = computed(() => {
             return userSettings.value.step1.baseDataPath.text;
@@ -897,9 +898,12 @@ export const useComprehensiveDataStore = defineStore(
                 name: "配水量",
                 type: "bar",
                 data: series,
-                lineStyle: {
-                    color: "#FF0000",
+                itemStyle: {
+                    color: "#E97132",
                 },
+                // lineStyle: {
+                //     color: "#E97132",
+                // },
             });
 
             let option = {
@@ -1380,6 +1384,7 @@ export const useComprehensiveDataStore = defineStore(
             irragationTrendChartData2,
             comboPickedChartOption,
             userPickedAssociationList,
+            echartsFontSize
         };
     }
 );

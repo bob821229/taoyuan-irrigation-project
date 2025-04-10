@@ -7,6 +7,11 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ref, watchEffect, onMounted, computed, watch,toRaw } from 'vue';
 import * as echarts from 'echarts';
+import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
+//取得 資料store
+const comprehensiveDataStore = useComprehensiveDataStore();
+//目前顯示的資料
+const store = computed(() => comprehensiveDataStore);
 // 圖表id
 const chartId = ref(uuidv4());
 // 初始化echarts 不要使用ref 與eChart的tooltip相容性 有bug
@@ -99,6 +104,9 @@ function updateChart() {
         legendList = props.chartSeries.map(f => f.name);
       }
     let options = {
+        textStyle: {
+                fontSize:store.value.echartsFontSize
+            },
         title: {
             text: props.chartTitle,
             // subtext: "Sub Title",

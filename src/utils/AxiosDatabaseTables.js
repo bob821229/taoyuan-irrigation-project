@@ -3,7 +3,7 @@ import Enumerable from 'linq'
 import axios from 'axios';
 // 設定 axios 的 baseURL
 if (process.env.NODE_ENV === 'production') {
-    axios.defaults.baseURL = '/projects/taoyuanIrrigation-v7/';
+    // axios.defaults.baseURL = '/projects/taoyuanIrrigation-v7/';
 }
 class AxiosDatabaseTables {
     outcomes = {};

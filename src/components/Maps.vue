@@ -54,7 +54,8 @@ function init() {
         '25': { visible: true },
         '11': { visible: true },
         '39': { visible: props.mapConfigs.showPlantingMound },
-        '10': { visible: props.mapConfigs.showWaterGroup },
+        '13': { visible: props.mapConfigs.showWaterGroup},
+        // '10': { visible: props.mapConfigs.showWaterGroup },
       }
     }
   );
@@ -115,7 +116,7 @@ function init() {
   view.ui.components = [];
   mapProfile.value.mapView = view;
   // this.mapProfile.subLayers.associationLayer = mapImagelayer.findSublayerById(15);
-  // this.mapProfile.subLayers.workstationLayer = mapImagelayer.findSublayerById(13);
+  mapProfile.value.subLayers.workstationLayer = mapImagelayer.findSublayerById(13);
   mapProfile.value.subLayers.groupLayer = mapImagelayer.findSublayerById(10);//水利小組
   // this.mapProfile.subLayers.pondLayer = mapImagelayer.findSublayerById(14);
   // this.mapProfile.subLayers.mainRiverLayer = mapImagelayer.findSublayerById(11);
@@ -142,7 +143,8 @@ function init() {
 
     toggleMapFarmingFrequency();
     toggleMapIrrigationGroup();
-    toggleMapWaterGroup();
+    // toggleMapWaterGroup();
+    toggleMapWorkstation();
 
   })
 }
@@ -179,6 +181,44 @@ function toggleMapWaterGroup() {
     uniqueValueInfos: mapConfigs.value.getUniqueValueInfosForWaterGroup()
   }
   let _labelStyle = MapStyle.waterGroup.original.labelingInfo;
+  // 根據管理處名稱分組
+  let result = Enumerable.from(store.value.userPickedAssociationList)
+    .groupBy(item => item.association)
+    .select(group => ({
+      association: group.key(),
+      workstationList: group.select(item => item.workstation).toArray()
+    }))
+    .toArray();
+  console.log("result:", result);
+  let queryString = result
+    .map(f => `(管理處名稱='${f.association}' and 工作站名稱 in ('${f.workstationList.join("','")}'))`)
+    .join(' or ');
+
+
+  console.log("queryString:", queryString);
+  // 工作站清單
+  // let workstationList = store.value.userPickedAssociationList.map(f => `'${f.workstation}'`)
+ 
+    // 控制水利小組標題
+  _labelStyle[0].where = queryString;
+  _layer.labelingInfo = _labelStyle;
+ 
+  _layer.definitionExpression = `${queryString}`
+  console.log("definitionExpression:", _layer.definitionExpression)
+  console.log("*_labelStyle:", _labelStyle);
+
+}
+// 根據使用者選擇的方案 篩選出對應的標題 工作站名稱 
+function toggleMapWorkstation() {
+  console.log('##toggleMapWorkstation');
+  let _layer = toRaw(mapProfile.value.subLayers.workstationLayer);
+
+  _layer.renderer = {
+    type: "unique-value",
+    field: "工作站名稱",
+    uniqueValueInfos: mapConfigs.value.getUniqueValueInfosForWaterGroup()
+  }
+  let _labelStyle = MapStyle.workstation.original.labelingInfo;
   // 根據管理處名稱分組
   let result = Enumerable.from(store.value.userPickedAssociationList)
     .groupBy(item => item.association)

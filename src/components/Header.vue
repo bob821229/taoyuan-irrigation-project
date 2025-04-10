@@ -6,7 +6,7 @@
                     石門水庫灌溉方案決策模組
                 </h4>
             </template>
-            <template #item="{ item, props, hasSubmenu }" >
+            <template #item="{ item, props, hasSubmenu }">
                 <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
                     <a v-ripple :href="href" v-bind="props.action" @click="navigate">
                         <span :class="item.icon" />
@@ -27,6 +27,21 @@
         </Menubar>
     </div>
     <Drawer style="width: 40vw;" v-model:visible="visibleRight" header="設定摘要" position="right">
+        圖表字體大小:
+        <div class="flex flex-wrap gap-4 align-items-center">
+            <div class="flex items-center gap-2 align-items-center">
+                <RadioButton v-model="comprehensiveDataStore.echartsFontSize" inputId="comprehensiveDataStore1" name="pizza" :value="16" />
+                <label for="comprehensiveDataStore1" style="font-size: 16px;">小</label>
+            </div>
+            <div class="flex items-center gap-2 align-items-center">
+                <RadioButton v-model="comprehensiveDataStore.echartsFontSize" inputId="comprehensiveDataStore2" name="pizza" :value="20" />
+                <label for="comprehensiveDataStore2" style="font-size: 20px;">中</label>
+            </div>
+            <div class="flex items-center gap-2 align-items-center">
+                <RadioButton v-model="comprehensiveDataStore.echartsFontSize" inputId="comprehensiveDataStore3" name="pizza" :value="24" />
+                <label for="comprehensiveDataStore3" style="font-size: 24px;">大</label>
+            </div>
+        </div>
         參數設定:
         <ul>
             <li>

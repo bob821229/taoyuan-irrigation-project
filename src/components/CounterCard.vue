@@ -15,7 +15,7 @@
         <!--<template #subtitle>Card subtitle</template>-->
         <template #content>
             <div class="text-center"  >
-                <div :class="txtClass">
+                <div  :class="txtClass">
                     <h2  id="minPlantingAreaAvailableToIrrigatedByReservoirWater" v-if="isNumber">
                         <count-up :startVal='0' :endVal='number' :duration="2"></count-up>
                     </h2>
@@ -31,6 +31,9 @@
                 <slot name="icon">
                 </slot>
             </div>
+            <slot name="footer-txt">
+
+            </slot>
         </template>
     </Card>
 </template>

@@ -119,15 +119,15 @@
                         <div class="col-12 d-flex gap-3"
                             style="text-align: right;align-self: center;justify-content: flex-end;font-weight: bold;">
                             <div class="d-flex gap-1 align-items-center">
-                                水利小組 :
+                                工作站 :
                                 <ToggleSwitch v-model="mapConfigs.showWaterGroup" />
                             </div>
                             <div class="d-flex gap-1 align-items-center">
                                 種植坵塊:
                                 <ToggleSwitch v-model="mapConfigs.showPlantingMound" />
                             </div>
-                           
-                                
+
+
                         </div>
                         <div class="col-md-6" v-show="false">
                             <div class="input-group mb-3">
@@ -159,6 +159,11 @@
                         <div class="col-6">
                             <CounterCard class="item h-100" :txtClass="waterShortageTxtColor" :titleTxt="`尚缺水量(萬噸)`"
                                 :number="waterShortage">
+                                <template #footer-txt>
+                                    <div class="text-start" style="color: #94A3B8;">
+                                        計算公式 : 尚缺水量 = 可供灌總配水量 - 供灌需水量 
+                                    </div>
+                                </template>
                             </CounterCard>
                         </div>
                         <div class="col-6">

@@ -1,7 +1,7 @@
 import axios from 'axios';
 let URL=''
 if (process.env.NODE_ENV === 'production') {
-  URL = '/projects/taoyuanIrrigation-v7/';
+  // URL = '/projects/taoyuanIrrigation-v7/';
 }
 // data相關的 api
 const dataRequest = axios.create({

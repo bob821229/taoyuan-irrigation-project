@@ -1,4 +1,10 @@
 <template>
+    <Drawer style="width: 100vw;" v-model:visible="visibleLeft" header="農業可供水量推估說明" position="left">
+            <iframe
+                src="https://tiwrar-my.sharepoint.com/personal/johnny_chen_triwra_org_tw/_layouts/15/Doc.aspx?sourcedoc={707d3763-7ce8-4f88-a9d2-b84c4cc5b0d9}&amp;action=embedview&amp;wdAr=1.7777777777777777"
+                style="width: 100%; height: 100%;padding: 10px;" frameborder="0">
+            </iframe>
+    </Drawer>
     <div class="row page_1 pt-2">
         <Card class='mb-2' style="">
             <template #header></template>
@@ -6,16 +12,11 @@
             <!-- <template #subtitle>Card subtitle</template> -->
             <template #content>
                 <div class="row">
-                    <!-- <div class="col-md-12">
-                        <Card class="mb-2">
-                            <template #subtitle>水源</template>
-<template #content>
-                                <p class="m-0">
-                                    水庫(大圳)
-                                </p>
-                            </template>
-</Card>
-</div> -->
+                    <div class="col-12 text-end">
+                        <!-- <span  @click="visibleLeft = true" class="pi pi-file-pdf" /> -->
+                        <span  @click="visibleLeft = true" class="pi pi-book" />
+                        <!-- <Button icon="pi pi-file-pdf" @click="visibleLeft = true"></Button> -->
+                    </div>
                     <div class="col-md-9 col-ms-12">
                         <Card style="">
                             <template #subtitle>參數設定</template>
@@ -29,7 +30,7 @@
                                                     <select class="form-select"
                                                         v-model="comprehensiveDataStore.userSettings.step1.baseDataPath">
                                                         <option
-                                                            v-for="(obj, idx) in comprehensiveDataStore.uiSettings.baseDataPlantingAreaPathList"
+                                                            v-for="obj in comprehensiveDataStore.uiSettings.baseDataPlantingAreaPathList"
                                                             :value="obj" :key="obj.value">
                                                             {{ obj.text }}</option>
                                                     </select>
@@ -127,12 +128,13 @@
             </template>
         </Card>
         <div class="col-12" style="display: flex;justify-content: space-between;align-items: center;">
-            <h3 class="mb-0" >埤塘水情</h3>
+            <h3 class="mb-0">埤塘水情</h3>
             <Button @click="clickGetResult">確定模擬</Button>
         </div>
     </div>
     <transition name="slide-fade">
         <div class="row">
+
             <div class="col-6" v-if="poundInfoList2 != null">
                 <Card class="">
                     <template #header></template>
@@ -154,7 +156,8 @@
                         </div>
                     </template>
                     <template #content>
-                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo1 }" @wheel="handleWheelScroll">
+                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo1 }"
+                            @wheel="handleWheelScroll">
                             <div class="row" :class="{ 'nowrap': !showAllPoundInfo1 }">
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-3" v-for="p in poundInfoList2"
                                     :key="p.ChannelName">
@@ -187,7 +190,8 @@
                         </div>
                     </template>
                     <template #content>
-                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo2 }" @wheel="handleWheelScroll">
+                        <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo2 }"
+                            @wheel="handleWheelScroll">
                             <div class="row" :class="{ 'nowrap': !showAllPoundInfo2 }">
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-3" v-for="p in poundInfoList"
                                     :key="p.ChannelName">
@@ -224,17 +228,18 @@ import { apiGetData } from '../apis/api'
 import dayjs from 'dayjs'
 import { WaterNeedsCalculator } from '@/utils/WaterNeedsCalculator'
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
+const visibleLeft = ref(false)
 const showPoundInfo = ref(false)
 const showAllPoundInfo1 = ref(false)
 const showAllPoundInfo2 = ref(false)
 const poundInfoList = ref(null)
 const poundInfoList2 = ref(null)
 const handleWheelScroll = (event) => {
-  const container = event.currentTarget;
-  if (container.scrollWidth > container.clientWidth) {
-    event.preventDefault(); // 阻止預設滾動行為（避免垂直滾動）
-    container.scrollLeft += event.deltaY; // 讓滾輪上下滾動轉為左右滾動
-  }
+    const container = event.currentTarget;
+    if (container.scrollWidth > container.clientWidth) {
+        event.preventDefault(); // 阻止預設滾動行為（避免垂直滾動）
+        container.scrollLeft += event.deltaY; // 讓滾輪上下滾動轉為左右滾動
+    }
 };
 //取得 埤塘資訊
 async function getPoundInfoByIrrigation() {
@@ -265,7 +270,7 @@ async function getPoundInfoByIrrigation() {
                 "PondCount": 22,
                 "PondCapacity": 9.1,
                 "PondStorage": 4.52,
-                "PercentageOfPondStorage": 49.67,
+                "PercentageOfPondStorage": 30.67,
                 "previousFileTime": "02/17",
                 "previousPondStorage": 4.66,
                 "ChineseFileTime": "114/2/24"
@@ -491,7 +496,7 @@ async function getPoundInfoByIrrigation() {
             item.content = `有效蓄水量`
             totalPondStorage += item.PondStorage;
             tatalPoundCapacity += item.PondCapacity;
-            item.PercentageOfPondStorage=Math.round10(item.PercentageOfPondStorage)
+            item.PercentageOfPondStorage = Math.round10(item.PercentageOfPondStorage)
         })
 
         let result2 = [
@@ -770,16 +775,16 @@ async function getPoundInfoByIrrigation() {
             item.content = `有效蓄水量`
             totalPondStorage2 += item.PondStorage;
             tatalPoundCapacity2 += item.PondCapacity;
-            item.PercentageOfPondStorage=Math.round10(item.PercentageOfPondStorage)
+            item.PercentageOfPondStorage = Math.round10(item.PercentageOfPondStorage)
         })
         // 桃園
         totalPondStorage = Math.round10(totalPondStorage, -2)
         tatalPoundCapacity = Math.round10(tatalPoundCapacity, -2)
-        TotalPoundStorageRate =  Math.round10(((totalPondStorage / tatalPoundCapacity) * 100))
+        TotalPoundStorageRate = Math.round10(((totalPondStorage / tatalPoundCapacity) * 100))
         // 石門
         totalPondStorage2 = Math.round10(totalPondStorage2, -2)
         tatalPoundCapacity2 = Math.round10(tatalPoundCapacity2, -2)
-        TotalPoundStorageRate2 =  Math.round10(((totalPondStorage2 / tatalPoundCapacity2) * 100))
+        TotalPoundStorageRate2 = Math.round10(((totalPondStorage2 / tatalPoundCapacity2) * 100))
 
         let obj = {
             "ChannelName": "埤塘蓄水概況",
@@ -797,8 +802,8 @@ async function getPoundInfoByIrrigation() {
         }
         result.unshift(obj)
         result2.unshift(obj2)
-        console.log("@result",result)
-        console.log("@result2",result2)
+        console.log("@result", result)
+        console.log("@result2", result2)
         poundInfoList.value = result
         poundInfoList2.value = result2
     } catch (error) {
@@ -807,8 +812,10 @@ async function getPoundInfoByIrrigation() {
 }
 // 取得路由
 const router = useRouter();
+
 //取得 資料store
 const comprehensiveDataStore = useComprehensiveDataStore();
+
 //目前顯示的資料
 const currentData = computed(() => comprehensiveDataStore);
 
@@ -859,9 +866,10 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.pi{
+.pi {
     cursor: pointer;
 }
+
 /* 啟用滾動條 */
 .scrollable {
     overflow-x: auto;
