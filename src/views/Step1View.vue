@@ -191,7 +191,7 @@
                     </template>
                     <template #content>
                         <div class="row-container" :class="{ 'scrollable': !showAllPoundInfo2 }"
-                            @wheel="handleWheelScroll">
+                            @wheel="handleWheelScroll1">
                             <div class="row" :class="{ 'nowrap': !showAllPoundInfo2 }">
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-3" v-for="p in poundInfoList"
                                     :key="p.ChannelName">
@@ -235,10 +235,20 @@ const showAllPoundInfo2 = ref(false)
 const poundInfoList = ref(null)
 const poundInfoList2 = ref(null)
 const handleWheelScroll = (event) => {
+    if(showAllPoundInfo1.value)return
     const container = event.currentTarget;
     if (container.scrollWidth > container.clientWidth) {
         event.preventDefault(); // 阻止預設滾動行為（避免垂直滾動）
         container.scrollLeft += event.deltaY; // 讓滾輪上下滾動轉為左右滾動
+    }
+};
+const handleWheelScroll1 = (event) => {
+    if(!showAllPoundInfo2.value){
+        const container = event.currentTarget;
+        if (container.scrollWidth > container.clientWidth) {
+            event.preventDefault(); // 阻止預設滾動行為（避免垂直滾動）
+            container.scrollLeft += event.deltaY; // 讓滾輪上下滾動轉為左右滾動
+        }
     }
 };
 //取得 埤塘資訊
