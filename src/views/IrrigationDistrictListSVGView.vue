@@ -1,9 +1,5 @@
 <template>
     <div class="text-center wrap">
-        <!-- <div class="block" @click="goToIrrigationDistrictSVGView()">
-        </div> -->
-        <!-- <img src="/images/IrrigationDistrictListSVGView.png" alt="" > -->
-        <!-- <img src="/images/桃園管理處_湖口工作站V5(轉外框)_01.svg" alt="SVG Image" width="200" height="200"> -->
         <div class="svg_container">
             <svg id="_圖層_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 960 542">
                 <g id="_石一" data-name="石一">
@@ -1678,108 +1674,8 @@ import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
 // 取得路由
 const router = useRouter();
 
-const mappingList = ref([
-    {
-        name: '桃一',
-        key: 'i1',
-        type: 'irrigationArea',
-        灌區: '桃一'
-    },
-    {
-        name: '桃二',
-        key: 'i2',
-        type: 'irrigationArea',
-        灌區: '桃一'
-    },
-    {
-        name: '桃三',
-        key: 'i3',
-        type: 'irrigationArea',
-        灌區: '桃一'
-    },
-    {
-        name: '石一',
-        key: 'i4',
-        type: 'irrigationArea',
-        灌區: '桃一'
-    },
-    {
-        name: '石二',
-        key: 'i5',
-        type: 'irrigationArea',
-        灌區: '桃一'
-    },
-    {
-        name: '湖口站',
-        key: 'w1',
-        type: 'workstation',
-        灌區: '桃一',
-
-    },
-    {
-        name: '新屋站',
-        key: 'w2',
-        type: 'workstation',
-        灌區: '桃一',
-
-    },
-    {
-        name: '新豐溪',
-        key: 's1',
-        type: 'stream',
-        灌區: '桃一'
-    },
-    {
-        name: '福興溪',
-        key: 's2',
-        type: 'stream',
-        灌區: '桃一'
-    },
-    {
-        name: '社子溪',
-        key: 's3',
-        type: 'stream',
-        灌區: '桃一'
-    },
-    {
-        name: '13支線',
-        key: 'b1',
-        type: 'branch',
-        工作站: '湖口站',
-        灌區: '桃一'
-    },
-    {
-        name: '11支線',
-        key: 'b2',
-        type: 'branch',
-        工作站: '湖口站',
-        灌區: '桃一'
-    },
-])
 onMounted(async () => {
-    // mappingList.value.forEach(async (item) => {
-    //     // 根據 name 屬性找到對應的 <g> 標籤
-    //     const gElement = document.querySelector(`g[id="${item.name}"]`);
-    //     if (gElement) {
-    //         // 添加 key 和 type 屬性
-    //         gElement.setAttribute('data-key', item.key);
-    //         gElement.setAttribute('data-type', item.type);
-    //         gElement.setAttribute('data-irrigation-area', item['灌區']);
-    //         // 綁定點擊事件
-    //         gElement.addEventListener('click', () => {
-    //             alert(`名稱 : ${item.name}, Key : ${item.key}, 類別 : ${item.type}`);
-    //             router.push({
-    //                 name: 'IrrigationDistrictSVGView',
-    //                 query: {
-    //                     name: item.name,
-    //                     key: item.key,
-    //                     type: item.type
-    //                 }
-    //             }
-    //             )
-    //         });
-    //     }
-    // })
+
     // 取得所有 含有data-name的 <g> 標籤
     const gElements = document.querySelectorAll('g[data-name]')
 
@@ -1815,6 +1711,9 @@ onMounted(async () => {
         }
     })
 })
+
+
+// 取得對應的 type (依據 name 的長度來判斷類型)
 function getTypeByDataName(name, typeList) {
     for (const item of typeList) {
         if (name.length === item.length) {
@@ -1831,6 +1730,8 @@ function getTypeByDataName(name, typeList) {
     }
     return ''
 }
+
+// 屬性篩選條件 對應表
 const typeList = ref([
     { length: 2, type: "灌區" },
     { length: 3, type: "管理處" },
@@ -1858,21 +1759,6 @@ img {
 
 .wrap {
     position: relative;
-
-    .block {
-        cursor: pointer;
-        position: absolute;
-        width: 32.2%;
-        height: 9.9%;
-        // border: 1px  solid #000;
-        top: 16.6%;
-        left: 3.7%;
-
-        &:hover {
-            border: 8px dashed #e87676;
-            background-color: rgba(69, 189, 35, 0.2);
-        }
-    }
 }
 
 .cls-1 {
@@ -1925,12 +1811,7 @@ img {
 
 
 
-.block1:hover polygon,
-.block1:hover path {
-    fill: rgba(69, 189, 35, 0.2);
-    stroke: #e87676;
-    stroke-width: 2px;
-}
+
 
 .st0 {
     fill: #231815;
