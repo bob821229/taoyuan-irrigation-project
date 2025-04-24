@@ -124,9 +124,7 @@ const reservoirWaterGivingWaterGroupArrayBaseData = computed(() => {
                     f.waterUsage == null ? 0 : f.waterUsage
                 ),
                 currentPondRemain: g.sum((f) =>
-                    f.currentPondRemain == null
-                        ? 0
-                        : f.currentPondRemain
+                    f.currentPondRemain == null ? 0 : f.currentPondRemain
                 ),
                 reservoirGiving: g.sum((f) =>
                     f.reservoirGiving == null ? 0 : f.reservoirGiving
@@ -149,14 +147,14 @@ const delayWaterGivingVsWaterAssignmentChartOptionData = computed(() => {
         reservoirWaterGivingWaterGroupArrayBaseData.value.map(
             (f) => f.tendaysNumber
         );
-    options.chartXAxis.data = xAxisData;
-    options.chartSeries.push({
-        name: "供水量",
-        type: "bar",
-        data: series,
-        //  itemStyle: {
-        //     color: "red",
-        // },
+        options.chartXAxis.data = xAxisData;
+        options.chartSeries.push({
+            name: "供水量",
+            type: "bar",
+            data: series,
+            //  itemStyle: {
+            //     color: "red",
+            // },
     });
     return options
 })
@@ -203,8 +201,7 @@ watch(chartList.value, (n) => {
         TT()
     }
 })
-const chartListForWaterAssignmentHasNoPond = ref(null);
-const waterNeedsCalculatorForNoPond = ref(null);
+
 async function init() {
 
 
@@ -308,11 +305,10 @@ async function init() {
             data["埤塘總庫容(m3)"],
             data["埤塘目前庫容比率"],
             data["埤塘目前庫容(m3)"],
-            totalPondStorage,
+            "totalPondStorage:",totalPondStorage,
             currentPondStorage
         );
-        let waterGivingByReservoirCalculator =
-            new WaterGivingByReservoirCalculator();
+        let waterGivingByReservoirCalculator = new WaterGivingByReservoirCalculator();
         await waterGivingByReservoirCalculator.calculateByFieldToLowerPeakWaterUsage(
             finalIrrigationSchedule,
             "waterUsage",
@@ -321,7 +317,7 @@ async function init() {
         );
         let idvOutcomes =
             await waterGivingByReservoirCalculator.getOutcomes();
-        // console.log("idvOutcomes:", idvOutcomes);
+        console.log("idvOutcomes:", idvOutcomes);
         //outList.push(idvOutcomes);
         idvOutcomes.tendaysStaticsList.forEach((item) => {
             chartList.value.push(item);
@@ -331,7 +327,6 @@ async function init() {
     // TT();
 }
 async function TT() {
-    //alert('tt');
 
     //重新模擬一次
     let _waterNeedsCalculator = new WaterNeedsCalculator();

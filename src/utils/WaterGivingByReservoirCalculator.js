@@ -169,13 +169,15 @@ class WaterGivingByReservoirCalculator {
         // let peakWaterUsage = Enumerable.from(tendaysWaterUsageList).where(f => f[qtyFieldName] != null).max(f => f[qtyFieldName]);
         // let peakWaterUsageTendays = Enumerable.from(tendaysWaterUsageList).where(f => f[qtyFieldName] == peakWaterUsage).toArray()[0];
 
-        // console.log('tendaysWaterUsageList', qtyFieldName, tendaysWaterUsageList);
-        // console.log('peakWaterUsage', peakWaterUsage, peakWaterUsageTendays);
-        // console.log("calculateByFieldToLowerPeakWaterUsage tendaysWaterUsageList:", tendaysWaterUsageList);
-        // console.log("calculateByFieldToLowerPeakWaterUsage qtyFieldName:", qtyFieldName);
-        // console.log("calculateByFieldToLowerPeakWaterUsage currentPondStorage:", currentPondStorage);
-        // console.log("calculateByFieldToLowerPeakWaterUsage totalPondStorage:", totalPondStorage);
-        
+        console.log('calculateByFieldToLowerPeakWaterUsage tendaysWaterUsageList', tendaysWaterUsageList);
+        console.log('calculateByFieldToLowerPeakWaterUsage qtyFieldName', qtyFieldName);
+        console.log('calculateByFieldToLowerPeakWaterUsage currentPondStorage', currentPondStorage);
+        console.log('calculateByFieldToLowerPeakWaterUsage totalPondStorage', totalPondStorage);
+        tendaysWaterUsageList.forEach((item) => {
+            if(!item[qtyFieldName]){
+                item[qtyFieldName] = 0;
+            }
+        });
         //期初，埤塘可用的水量
         let pondAvailableQty = currentPondStorage;
         // 最大用水量的那旬
@@ -187,7 +189,7 @@ class WaterGivingByReservoirCalculator {
         // console.log("calculateByFieldToLowerPeakWaterUsage peakTendaysData:", peakTendaysData);
         let oneBeforePeakTendaysData = Enumerable.from(tendaysWaterUsageList).where(
             f => f.number == (peakTendaysData.number - 1)
-        ).firstOrDefault();
+        ).firstOrDefault({number: peakTendaysData.number - 1, text: '一月下旬', days: 10, waterUsage: 0});
         // console.log("calculateByFieldToLowerPeakWaterUsage oneBeforePeakTendaysData:", oneBeforePeakTendaysData);
         // console.log('peakTendays', peakTendaysData);
         // console.log('1 before peakTendays', oneBeforePeakTendaysData);
@@ -199,11 +201,11 @@ class WaterGivingByReservoirCalculator {
             tendaysNumberStart2UsePondWater = oneBeforePeakTendaysData;
         }
 
-        console.log('*peakTendaysData', peakTendaysData);
-        console.log('*oneBeforePeakTendaysData', oneBeforePeakTendaysData);
-        console.log('*tendaysNumberStart2UsePondWater', tendaysNumberStart2UsePondWater);
+        // console.log('@*peakTendaysData', peakTendaysData);
+        // console.log('@*oneBeforePeakTendaysData', oneBeforePeakTendaysData);
+        // console.log('@*tendaysNumberStart2UsePondWater', tendaysNumberStart2UsePondWater);
         //如果埤塘蓄水量不夠 『最高峰旬』 + 『最高峰前一旬』扣，則『最高峰旬』要扣所有需水量，剩下的蓄水量給『最高峰前一旬』扣
-        if(tendaysNumberStart2UsePondWater.number != peakTendaysData.number){
+        if(tendaysNumberStart2UsePondWater?.number != peakTendaysData.number){
             //埤塘可以給2旬扣
             // if(peakTendaysData[qtyFieldName] + oneBeforePeakTendaysData[qtyFieldName] < pondAvailableQty){
             //     //不夠兩旬用，第2旬(即高峰)的需求量要全由埤塘支付
@@ -212,6 +214,8 @@ class WaterGivingByReservoirCalculator {
             //     //夠兩旬用，所以第1旬埤塘用量就是第1旬的需求量
             //     tendaysNumberStart2UsePondWater.pondUsage = tendaysNumberStart2UsePondWater[qtyFieldName]
             // }
+            console.log("tendaysNumberStart2UsePondWater:", tendaysNumberStart2UsePondWater);
+            console.log("tendaysNumberStart2UsePondWater qtyFieldName:", qtyFieldName);
             let remainsAfterUseForPeak = pondAvailableQty - peakTendaysData[qtyFieldName];
             if(remainsAfterUseForPeak > tendaysNumberStart2UsePondWater[qtyFieldName]){
                 tendaysNumberStart2UsePondWater.pondUsage = tendaysNumberStart2UsePondWater[qtyFieldName];
@@ -294,6 +298,7 @@ class WaterGivingByReservoirCalculator {
         let startNumber = plantingEndNumber + 1;
         let endNumber = plantingEndNumber + divider;
         let avgQty = totalPondStorage / divider;
+        console.log("totalPondStorage", totalPondStorage);
         for(let num = startNumber; num <= endNumber; num++){
             console.log(`@#@#`,{
                 totalPondStorage: totalPondStorage, 

@@ -160,16 +160,7 @@ const comprehensiveDataStore = useComprehensiveDataStore();
 //目前顯示的資料
 const store = computed(() => comprehensiveDataStore);
 
-const solutionName = ref(null)
-const sourceList4RecordsList = ref(null)
-const path = computed(() => {
-
-    return 123
-})
 // 根據step2種植密度+選取的灌區 篩選出對應的json檔案
-function init() {
-    Enumerable.from(store.value.sourceList2RecordsList)
-}
 //篩選出對應資料的json檔案
 const irrigationStartDelayListData = computed(() => {
     let tmp = store.value.databaseTables['整田期錯開散佈圖'];
@@ -216,45 +207,7 @@ async function fetchSourceList() {
 onMounted(() => {
     fetchSourceList()
 })
-async function chartClickCallback(param) {
-    console.log('chartClickCallback', param);
-    if (param.data.combo != null) {
-        console.log(param.data.combo);
-        this.comboPicked = param.data.combo;
-        //alert(param.seriesType);
 
-
-        this.userSettings.irrigationOrganizationTendaysWaterUsage = this.comboPicked.tendaysWaterUsageList;
-        // let ttt = (new AgricultureCalendar()).transferToTendaysField(this.userSettings.irrigationOrganizationTendaysWaterUsage, 'tendaysNumber', 'waterUsage');
-        //console.log('chartClickCallback', this.userSettings.irrigationOrganizationTendaysWaterUsage, ttt);
-        this.userSettings.irrigationOrganizationTendaysWaterUsage =
-            (new AgricultureCalendar()).transferToTendaysField(this.comboPicked.tendaysWaterUsageList, 'tendaysNumber', 'waterUsage');
-        let pickedIrrigationGroupList = this.comboPicked.solutionName.split('、');
-
-        console.log('irrigationOrganizationTendaysWaterUsage', this.userSettings.irrigationOrganizationTendaysWaterUsage);
-        let _waterNeedsCalculator = new WaterNeedsCalculator();
-        let c = await loadDataFromCombinationUserPicked(_waterNeedsCalculator, this.userSettings,
-            (_baseData) => {
-                let _filterData = Enumerable.from(_baseData).where(
-                    f => pickedIrrigationGroupList.includes(f['灌區'])
-
-                ).toArray();
-
-                return _filterData;
-            },
-
-        );
-        //console.log('this.combinationUserPickedSimulationData', c);
-        this.simulationDataHere.baseData = c.baseData;     //基礎資料及運用基礎資料計算出的中繼結果(中繼結果是用來再計算以算出outcomes)
-        this.simulationDataHere.outcomes = c.outcomes;
-        this.simulationDataHere.reservoirWaterStoarage = c.reservoirWaterStoarage;
-        this.simulationDataHere.areaWaterNeedsByIrrigationGroup = c.areaWaterNeedsByIrrigationGroup;
-
-        scrollTo('irrigation-schedule-intro-map');
-    }
-
-
-}
 </script>
 
 <style scoped lang="scss">

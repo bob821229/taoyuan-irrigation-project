@@ -65,7 +65,7 @@ function init() {
       "https://gisportal.triwra.org.tw/server/rest/services/BigBossTaoyuanPonds/MapServer",
     sublayers: mapConfigs.value.getSublayers()
   });
-  console.log('mapImagelayer:', mapImagelayer);
+  // console.log('mapImagelayer:', mapImagelayer);
   let highlightGraphicsLayer = new GraphicsLayer();
   let territoryGraphicsLayer = new GraphicsLayer();
   let map = new Map({
@@ -79,8 +79,8 @@ function init() {
       highlightGraphicsLayer,
     ]
   });
-  console.log('map:', map);
-  console.log('mapId.value:', mapId.value);
+  // console.log('map:', map);
+  // console.log('mapId.value:', mapId.value);
   let view = new MapView({
     map: map,
     // map: webmap,
@@ -132,11 +132,11 @@ function init() {
 
   view.when(() => {
     view.on('click', (a, b, c) => {
-      console.log('view click', a, b, c);
+      // console.log('view click', a, b, c);
     });
 
     view.watch("scale", function (newScale) {
-      console.log("Updated scale: ", newScale);
+      // console.log("Updated scale: ", newScale);
     });
 
     fitAndCeneterMap(view, mapImagelayer);
@@ -168,11 +168,11 @@ function toggleMapIrrigationGroup() {
     _labelStyle[0].where = `分區 in ('桃二','桃三','石一','石二','桃一')`;
   }
   _layer.labelingInfo = _labelStyle;
-  console.log("*_labelStyle:", _labelStyle);
+  // console.log("*_labelStyle:", _labelStyle);
 }
 // 根據使用者選擇的方案 篩選出對應的標題 水利小組名稱 
 function toggleMapWaterGroup() {
-  console.log('##toggleMapWaterGroup');
+  // console.log('##toggleMapWaterGroup');
   let _layer = toRaw(mapProfile.value.subLayers.groupLayer);
 
   _layer.renderer = {
@@ -189,13 +189,13 @@ function toggleMapWaterGroup() {
       workstationList: group.select(item => item.workstation).toArray()
     }))
     .toArray();
-  console.log("result:", result);
+  // console.log("result:", result);
   let queryString = result
     .map(f => `(管理處名稱='${f.association}' and 工作站名稱 in ('${f.workstationList.join("','")}'))`)
     .join(' or ');
 
 
-  console.log("queryString:", queryString);
+  // console.log("queryString:", queryString);
   // 工作站清單
   // let workstationList = store.value.userPickedAssociationList.map(f => `'${f.workstation}'`)
  
@@ -204,13 +204,13 @@ function toggleMapWaterGroup() {
   _layer.labelingInfo = _labelStyle;
  
   _layer.definitionExpression = `${queryString}`
-  console.log("definitionExpression:", _layer.definitionExpression)
-  console.log("*_labelStyle:", _labelStyle);
+  // console.log("definitionExpression:", _layer.definitionExpression)
+  // console.log("*_labelStyle:", _labelStyle);
 
 }
 // 根據使用者選擇的方案 篩選出對應的標題 工作站名稱 
 function toggleMapWorkstation() {
-  console.log('##toggleMapWorkstation');
+  // console.log('##toggleMapWorkstation');
   let _layer = toRaw(mapProfile.value.subLayers.workstationLayer);
 
   _layer.renderer = {
@@ -227,13 +227,13 @@ function toggleMapWorkstation() {
       workstationList: group.select(item => item.workstation).toArray()
     }))
     .toArray();
-  console.log("result:", result);
+  // console.log("result:", result);
   let queryString = result
     .map(f => `(管理處名稱='${f.association}' and 工作站名稱 in ('${f.workstationList.join("','")}'))`)
     .join(' or ');
 
 
-  console.log("queryString:", queryString);
+  // console.log("queryString:", queryString);
   // 工作站清單
   // let workstationList = store.value.userPickedAssociationList.map(f => `'${f.workstation}'`)
  
@@ -242,8 +242,8 @@ function toggleMapWorkstation() {
   _layer.labelingInfo = _labelStyle;
  
   _layer.definitionExpression = `${queryString}`
-  console.log("definitionExpression:", _layer.definitionExpression)
-  console.log("*_labelStyle:", _labelStyle);
+  // console.log("definitionExpression:", _layer.definitionExpression)
+  // console.log("*_labelStyle:", _labelStyle);
 
 }
 function fitAndCeneterMap(_view, _mapImageLayer) {
@@ -321,7 +321,7 @@ function toggleMapFarmingFrequency() {
 
       _extraWhere += ` 灌區 in (${_irrigationGroupList.join(',')})`;
 
-      console.log("_extraWhere:", _extraWhere);
+      // console.log("_extraWhere:", _extraWhere);
     } else {
       let _irrigationGroupList = store.value.userPickedAssociationList.map(f => `'${f}'`)
       // _extraWhere = ` 灌區 in ('桃二','桃三','石一','石二','桃一')`;
@@ -339,16 +339,16 @@ function toggleMapFarmingFrequency() {
           return _where;
         }
       ).toArray();
-      console.log('_groupList', _groupList);
+      // console.log('_groupList', _groupList);
 
       _extraWhere = _groupList.join(' or ');
-      console.log(_extraWhere);
+      // console.log(_extraWhere);
     }
 
     if (_extraWhere.length > 0) {
       _where = `${_where} and (${_extraWhere})`;
     }
-    console.log("_where:", _where);
+    // console.log("_where:", _where);
     _layer.definitionExpression = _where;
     // _layer.visible = true;
   } else {
@@ -358,7 +358,7 @@ function toggleMapFarmingFrequency() {
 
 }
 onMounted(() => {
-  console.log('## map mounted');
+  // console.log('## map mounted');
   init()
 })
 // watch([store.value.solutionUserPicked.irrigationCombination,store.value.userSettings.step2.baseDataPath.land_using_frequency],()=>{

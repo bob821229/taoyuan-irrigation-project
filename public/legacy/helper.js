@@ -273,8 +273,8 @@ function getIrrigationGroupSeq(irrigationGroup) {
           : 5
   return seq;
 }
-function scrollTo(DOM_ID) {
-  document.getElementById(DOM_ID).scrollIntoView(
-    { behavior: "smooth", block: "start" }
-  );
-}
+// function scrollTo(DOM_ID) {
+//   document.getElementById(DOM_ID).scrollIntoView(
+//     { behavior: "smooth", block: "start" }
+//   );
+// }
