@@ -143,8 +143,12 @@ export const useComprehensiveDataStore = defineStore(
             // 模擬時間
             decisionMakingDateList: [
                 {
-                    text: "11-01",
-                    value: "11-01",
+                    text: "114-11-01",
+                    value: "2025-11-01",
+                },
+                {
+                    text: "114-01-01",
+                    value: "2025-01-01",
                 },
                 {
                     text: "12-01",

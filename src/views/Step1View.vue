@@ -850,7 +850,7 @@ const waterNeedsCalculator = ref(null);
 function setSimulationWaterStorage() {
     let date = comprehensiveDataStore.userSettings.step1.decisionMakingDate
     console.log("模擬日期改變了!", date);
-    let obj = Enumerable.from(databaseTablesData.value).where(f => dayjs(f.time).format('MM-DD') == date).firstOrDefault();
+    let obj = Enumerable.from(databaseTablesData.value).where(f => dayjs(f.time).format('YYYY-MM-DD') == date).firstOrDefault();
     if (obj != null) {
         //alert(obj.EffectiveStorage);
         comprehensiveDataStore.userSettings.step1.simulationWaterStorage10kTons = Math.round(obj.EffectiveStorage);

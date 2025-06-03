@@ -123,9 +123,9 @@ function updateChart() {
 
         legend: {
             data: legendList,
-            itemHeight: 0,
+            // itemHeight: 1,
         },
-        xAxis: fomatXAxis(props.chartXAxis),
+        xAxis: formatXAxis(props.chartXAxis),
         yAxis: props.chartYAxis,
         series: props.chartSeries
     }
@@ -136,9 +136,9 @@ function updateChart() {
 
     );
 }
-const fomatXAxis = (xAxis) => {
-if (!xAxis || !Array.isArray(xAxis.data)) {
-        console.warn('fomatXAxis 接收到的 xAxis 無效', xAxis);
+const formatXAxis = (xAxis) => {
+    if (!xAxis || !Array.isArray(xAxis.data)) {
+        console.warn('formatXAxis 接收到的 xAxis 無效', xAxis);
         return xAxis; // 或 return {}; 根據你需求
     }
 

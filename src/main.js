@@ -30,6 +30,14 @@ import '@arcgis/core/assets/esri/themes/light/main.css';
 // import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 
+
+
+// import VueDragResize from 'vue-drag-resize'
+
+import Vue3DraggableResizable from 'vue3-draggable-resizable'
+//default styles
+import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+
 // 水缸特效
 // import 'ui-water-jar';
 // import { defineCustomElements } from 'ui-water-jar/loader';
@@ -55,6 +63,7 @@ app.component('ToggleSwitch', ToggleSwitch);
 app.component('RadioButton', RadioButton);
 app.directive('tooltip', Tooltip);
 app.use(createPinia())
+app.use(Vue3DraggableResizable)
 app.use(router)
 
 app.mount('#app')
