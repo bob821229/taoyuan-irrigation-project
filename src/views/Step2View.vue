@@ -362,7 +362,7 @@ async function init() {
 const compareSettings = ref(null)
 const prefix = ref(null)
 async function loadData(baseDataFilterCallback) {
-    console.log('loadData');
+    console.log('@@loadData');
     waterNeedsCalculator.value = new WaterNeedsCalculator();
 
     compareSettings.value = copyJsonObject(store.value.userSettings.step1);

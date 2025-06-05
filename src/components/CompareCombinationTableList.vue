@@ -44,9 +44,12 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch,onMounted } from 'vue';
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
 import { RouterLink, RouterView, useRouter } from 'vue-router'
+onMounted(() => {
+    console.log("@@方案清單已掛載");
+})
 // 取得路由
 const router = useRouter();
 //取得 資料store

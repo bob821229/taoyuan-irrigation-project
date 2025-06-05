@@ -69,8 +69,8 @@ onMounted(() => {
   <div class="wrap">
     <router-view v-slot="{ Component }">
       <transition @enter="enter" @leave="leave" mode="default" :duration="{ enter: 600, leave: 400 }">
-  <component :is="Component" :key="$route.path" />
-</transition>
+        <component :is="Component" :key="$route.path" />
+      </transition>
     </router-view>
   </div>
 </template>

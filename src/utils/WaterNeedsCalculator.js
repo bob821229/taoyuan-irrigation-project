@@ -2,6 +2,7 @@ import { ApiCaller } from './ApiCallerModule.js';
 import { AgricultureCalendar } from './AgricultureCalendar.js';
 import axios from 'axios';
 import Enumerable from 'linq'
+import dayjs from 'dayjs'
 class WaterNeedsCalculator {
     AgricultureCalendar = null;
     tenDayPeriodBaseDataList = null;
@@ -390,8 +391,8 @@ class WaterNeedsCalculator {
         //  12/1 =$B$27-62*$B$28+SUM(VLOOKUP($B$30,$AG$31:$BQ$37,BO$28:BQ$28))+SUM(VLOOKUP($B30,$AG$31:$BQ$37,AH$28:AJ$28))
         //  1/1 =$B$27-31*$B$28+SUM(VLOOKUP($B$30,$AG$31:$BQ$37,AH$28:AJ$28))
         //  2/1 =$B$27
-
-        let ref = Enumerable.from(this.decisionMakingDateListMappingInflowsSettings).where(f => f.text == this.userSettings.decisionMakingDate).first();
+        let data=dayjs(this.userSettings.decisionMakingDate).format('MM-DD')
+        let ref = Enumerable.from(this.decisionMakingDateListMappingInflowsSettings).where(f => f.text == data).first();
 
         //console.log('calculateInitReservoirStorage', ref, this.userPickedInflowPredictionIndexByTendaysList);
         let predictionInflowsTotal = 0;

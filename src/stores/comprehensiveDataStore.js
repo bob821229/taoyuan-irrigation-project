@@ -22,7 +22,7 @@ export const useComprehensiveDataStore = defineStore(
                 farmingPeriod: 1,
                 //decisionMakingDate: '02-01',//dayjs().format('MM-DD'),
                 //模擬時間
-                decisionMakingDate: "01-01", //dayjs().format('MM-DD'),
+                decisionMakingDate: "2024-01-01", //dayjs().format('MM-DD'),
                 perdictAt: "02-01",
                 //模擬時間蓄水量
                 simulationWaterStorage10kTons: 8000, //15000,
@@ -143,24 +143,304 @@ export const useComprehensiveDataStore = defineStore(
             // 模擬時間
             decisionMakingDateList: [
                 {
-                    text: "114-11-01",
-                    value: "2025-11-01",
+                    datatime: "2024-01-01T00:00:00",
+                    text: "113-01-01",
+                    value: "2024-01-01",
                 },
                 {
-                    text: "114-01-01",
-                    value: "2025-01-01",
+                    datatime: "2023-01-01T00:00:00",
+                    text: "112-01-01",
+                    value: "2023-01-01",
                 },
                 {
-                    text: "12-01",
-                    value: "12-01",
+                    datatime: "2022-01-01T00:00:00",
+                    text: "111-01-01",
+                    value: "2022-01-01",
                 },
                 {
-                    text: "01-01",
-                    value: "01-01",
+                    datatime: "2021-01-01T00:00:00",
+                    text: "110-01-01",
+                    value: "2021-01-01",
                 },
                 {
-                    text: "02-01",
-                    value: "02-01",
+                    datatime: "2020-01-01T00:00:00",
+                    text: "109-01-01",
+                    value: "2020-01-01",
+                },
+                {
+                    datatime: "2019-01-01T00:00:00",
+                    text: "108-01-01",
+                    value: "2019-01-01",
+                },
+                {
+                    datatime: "2018-01-01T00:00:00",
+                    text: "107-01-01",
+                    value: "2018-01-01",
+                },
+                {
+                    datatime: "2017-01-01T00:00:00",
+                    text: "106-01-01",
+                    value: "2017-01-01",
+                },
+                {
+                    datatime: "2016-01-01T00:00:00",
+                    text: "105-01-01",
+                    value: "2016-01-01",
+                },
+                {
+                    datatime: "2015-01-01T00:00:00",
+                    text: "104-01-01",
+                    value: "2015-01-01",
+                },
+                {
+                    datatime: "2014-01-01T00:00:00",
+                    text: "103-01-01",
+                    value: "2014-01-01",
+                },
+                {
+                    datatime: "2013-01-01T00:00:00",
+                    text: "102-01-01",
+                    value: "2013-01-01",
+                },
+                {
+                    datatime: "2012-01-01T00:00:00",
+                    text: "101-01-01",
+                    value: "2012-01-01",
+                },
+                {
+                    datatime: "2011-01-01T00:00:00",
+                    text: "100-01-01",
+                    value: "2011-01-01",
+                },
+                {
+                    datatime: "2010-01-01T00:00:00",
+                    text: "99-01-01",
+                    value: "2010-01-01",
+                },
+                {
+                    datatime: "2009-01-01T00:00:00",
+                    text: "98-01-01",
+                    value: "2009-01-01",
+                },
+                {
+                    datatime: "2008-01-01T00:00:00",
+                    text: "97-01-01",
+                    value: "2008-01-01",
+                },
+                {
+                    datatime: "2007-01-01T00:00:00",
+                    text: "96-01-01",
+                    value: "2007-01-01",
+                },
+                {
+                    datatime: "2006-01-01T00:00:00",
+                    text: "95-01-01",
+                    value: "2006-01-01",
+                },
+                {
+                    datatime: "2005-01-01T00:00:00",
+                    text: "94-01-01",
+                    value: "2005-01-01",
+                },
+                {
+                    datatime: "2004-01-01T00:00:00",
+                    text: "93-01-01",
+                    value: "2004-01-01",
+                },
+                {
+                    datatime: "2003-01-01T00:00:00",
+                    text: "92-01-01",
+                    value: "2003-01-01",
+                },
+                {
+                    datatime: "2002-01-01T00:00:00",
+                    text: "91-01-01",
+                    value: "2002-01-01",
+                },
+                {
+                    datatime: "2001-01-01T00:00:00",
+                    text: "90-01-01",
+                    value: "2001-01-01",
+                },
+                {
+                    datatime: "2000-01-01T00:00:00",
+                    text: "89-01-01",
+                    value: "2000-01-01",
+                },
+                {
+                    datatime: "1999-01-01T00:00:00",
+                    text: "88-01-01",
+                    value: "1999-01-01",
+                },
+                {
+                    datatime: "1998-01-01T00:00:00",
+                    text: "87-01-01",
+                    value: "1998-01-01",
+                },
+                {
+                    datatime: "1997-01-01T00:00:00",
+                    text: "86-01-01",
+                    value: "1997-01-01",
+                },
+                {
+                    datatime: "1996-01-01T00:00:00",
+                    text: "85-01-01",
+                    value: "1996-01-01",
+                },
+                {
+                    datatime: "1995-01-01T00:00:00",
+                    text: "84-01-01",
+                    value: "1995-01-01",
+                },
+                {
+                    datatime: "1994-01-01T00:00:00",
+                    text: "83-01-01",
+                    value: "1994-01-01",
+                },
+                {
+                    datatime: "1993-01-01T00:00:00",
+                    text: "82-01-01",
+                    value: "1993-01-01",
+                },
+                {
+                    datatime: "1992-01-01T00:00:00",
+                    text: "81-01-01",
+                    value: "1992-01-01",
+                },
+                {
+                    datatime: "1991-01-01T00:00:00",
+                    text: "80-01-01",
+                    value: "1991-01-01",
+                },
+                {
+                    datatime: "1990-01-01T00:00:00",
+                    text: "79-01-01",
+                    value: "1990-01-01",
+                },
+                {
+                    datatime: "1989-01-01T00:00:00",
+                    text: "78-01-01",
+                    value: "1989-01-01",
+                },
+                {
+                    datatime: "1988-01-01T00:00:00",
+                    text: "77-01-01",
+                    value: "1988-01-01",
+                },
+                {
+                    datatime: "1987-01-01T00:00:00",
+                    text: "76-01-01",
+                    value: "1987-01-01",
+                },
+                {
+                    datatime: "1986-01-01T00:00:00",
+                    text: "75-01-01",
+                    value: "1986-01-01",
+                },
+                {
+                    datatime: "1985-01-01T00:00:00",
+                    text: "74-01-01",
+                    value: "1985-01-01",
+                },
+                {
+                    datatime: "1984-01-01T00:00:00",
+                    text: "73-01-01",
+                    value: "1984-01-01",
+                },
+                {
+                    datatime: "1983-01-01T00:00:00",
+                    text: "72-01-01",
+                    value: "1983-01-01",
+                },
+                {
+                    datatime: "1982-01-01T00:00:00",
+                    text: "71-01-01",
+                    value: "1982-01-01",
+                },
+                {
+                    datatime: "1981-01-01T00:00:00",
+                    text: "70-01-01",
+                    value: "1981-01-01",
+                },
+                {
+                    datatime: "1980-01-01T00:00:00",
+                    text: "69-01-01",
+                    value: "1980-01-01",
+                },
+                {
+                    datatime: "1979-01-01T00:00:00",
+                    text: "68-01-01",
+                    value: "1979-01-01",
+                },
+                {
+                    datatime: "1978-01-01T00:00:00",
+                    text: "67-01-01",
+                    value: "1978-01-01",
+                },
+                {
+                    datatime: "1977-01-01T00:00:00",
+                    text: "66-01-01",
+                    value: "1977-01-01",
+                },
+                {
+                    datatime: "1976-01-01T00:00:00",
+                    text: "65-01-01",
+                    value: "1976-01-01",
+                },
+                {
+                    datatime: "1975-01-01T00:00:00",
+                    text: "64-01-01",
+                    value: "1975-01-01",
+                },
+                {
+                    datatime: "1974-01-01T00:00:00",
+                    text: "63-01-01",
+                    value: "1974-01-01",
+                },
+                {
+                    datatime: "1973-01-01T00:00:00",
+                    text: "62-01-01",
+                    value: "1973-01-01",
+                },
+                {
+                    datatime: "1972-01-01T00:00:00",
+                    text: "61-01-01",
+                    value: "1972-01-01",
+                },
+                {
+                    datatime: "1971-01-01T00:00:00",
+                    text: "60-01-01",
+                    value: "1971-01-01",
+                },
+                {
+                    datatime: "1970-01-01T00:00:00",
+                    text: "59-01-01",
+                    value: "1970-01-01",
+                },
+                {
+                    datatime: "1969-01-01T00:00:00",
+                    text: "58-01-01",
+                    value: "1969-01-01",
+                },
+                {
+                    datatime: "1968-01-01T00:00:00",
+                    text: "57-01-01",
+                    value: "1968-01-01",
+                },
+                {
+                    datatime: "1967-01-01T00:00:00",
+                    text: "56-01-01",
+                    value: "1967-01-01",
+                },
+                {
+                    datatime: "1966-01-01T00:00:00",
+                    text: "55-01-01",
+                    value: "1966-01-01",
+                },
+                {
+                    datatime: "1965-01-01T00:00:00",
+                    text: "54-01-01",
+                    value: "1965-01-01",
                 },
             ],
             // 超越機率入流量
@@ -531,7 +811,7 @@ export const useComprehensiveDataStore = defineStore(
         const userPickedAssociationList = computed(() => {
             //預設為全部
             if (solutionUserPicked.irrigationCombination == null) {
-                return uiSettings.value.irrigationGroupList
+                return uiSettings.value.irrigationGroupList;
             } else {
                 //工作站清單
                 const workstationList = [];
@@ -544,16 +824,18 @@ export const useComprehensiveDataStore = defineStore(
                 groupList.forEach((group) => {
                     const matchedWorkstations = Enumerable.from(
                         uiSettings.value.irrigationGroupList
-                    ).where((item) => item.irrigationGroup === group)
-                        .select((item) => {return {...item}})
+                    )
+                        .where((item) => item.irrigationGroup === group)
+                        .select((item) => {
+                            return { ...item };
+                        })
                         .toArray();
 
-                        matchedWorkstations.forEach((workstation) => {
-                            if (!workstationList.includes(workstation)) {
-                                workstationList.push(workstation);
-                            }
-                        })
-                        
+                    matchedWorkstations.forEach((workstation) => {
+                        if (!workstationList.includes(workstation)) {
+                            workstationList.push(workstation);
+                        }
+                    });
                 });
                 return workstationList;
             }
@@ -1388,7 +1670,7 @@ export const useComprehensiveDataStore = defineStore(
             irragationTrendChartData2,
             comboPickedChartOption,
             userPickedAssociationList,
-            echartsFontSize
+            echartsFontSize,
         };
     }
 );

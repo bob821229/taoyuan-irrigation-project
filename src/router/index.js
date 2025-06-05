@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory,createWebHashHistory } from "vue-router";
-
+import { useComprehensiveDataStore } from "@/stores/comprehensiveDataStore";
 const router = createRouter({
     // history: createWebHistory(import.meta.env.BASE_URL),
     history: createWebHashHistory(import.meta.env.BASE_URL), // 改成 Hash 模式
@@ -105,11 +105,18 @@ const router = createRouter({
     ],
 });
 router.beforeEach((to, from, next) => {
-    if (to.matched.length === 0) {
-      // 轉跳回首頁或預設頁面
-      next("/");
-    } else {
-      next();
-    }
-  });
+    next(); // 正常進入目標路由
+    // const comprehensiveDataStore = useComprehensiveDataStore();
+
+    // 確保 `simulationData` 已初始化
+    // if (!comprehensiveDataStore.simulationData || comprehensiveDataStore.simulationData.outcomes == null) {
+    //     if (to.name !== 'step1') {
+    //         next({ name: 'step1' }); // 只在非 `step1` 路由時跳轉
+    //     } else {
+    //         next(); // 如果已在 `step1`，允許進入
+    //     }
+    // } else {
+    //     next(); // 正常進入目標路由
+    // }
+});
 export default router;
