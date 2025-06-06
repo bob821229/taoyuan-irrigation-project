@@ -27,9 +27,9 @@ export const useComprehensiveDataStore = defineStore(
                 //模擬時間蓄水量
                 simulationWaterStorage10kTons: 8000, //15000,
                 //民生公共用水量
-                publicWaterUsage10kTonsPerDay: 100,
+                publicWaterUsage10kTonsPerDay: 0,
                 //安全蓄水量
-                safeWaterStorage10kTons: 3400,
+                safeWaterStorage10kTons: 0,
                 //期作總入流量
                 shimenReservoirInflowPredictionIndex: "I95b112",
                 //可供灌水量面積
@@ -108,7 +108,6 @@ export const useComprehensiveDataStore = defineStore(
                     value: "/data/water-needs-base-data/field-water-need-list-planting-beyond-5yrs-pond-current-storage-included-ia-20241227.json",
                     land_using_frequency: 5,
                 },
-
                 {
                     text: "民國102-103年平均種植面積",
                     value: "/data/water-needs-base-data/field-water-need-list-planting-roc-year-104-pond-current-storage-included-ia-20251113.json",
@@ -1144,7 +1143,7 @@ export const useComprehensiveDataStore = defineStore(
                         },
                         position: "left",
 
-                        max: 25000,
+                        // max: 25000,
                     },
                     chartSeries: s,
                     // [
@@ -1213,7 +1212,7 @@ export const useComprehensiveDataStore = defineStore(
                     },
                     position: "left",
 
-                    max: maxX,
+                    // max: maxX,
                 },
                 chartSeries: chartSeries,
                 chartTitle: null,
@@ -1448,7 +1447,7 @@ export const useComprehensiveDataStore = defineStore(
                         },
                         position: "left",
 
-                        max: 25000,
+                        // max: 25000,
                     },
                     chartSeries: s,
                     // [

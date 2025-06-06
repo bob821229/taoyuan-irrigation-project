@@ -309,7 +309,7 @@ const totalPondStorage = computed(() => {
     return result
 })
 const showTable = ref(false);
-const showEcharts = ref(false);
+const showEcharts = ref(true);
 const showMaps = ref(true);
 const tooltipTxt = computed(() => {
     if (!showEcharts.value) {
