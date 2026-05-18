@@ -255,6 +255,7 @@ const handleWheelScroll1 = (event) => {
 //取得 埤塘資訊
 async function getPoundInfoByIrrigation() {
     try {
+        // 石門
         let result = [
     {
         "IANo": null,
@@ -509,7 +510,7 @@ async function getPoundInfoByIrrigation() {
             tatalPoundCapacity += item.PondCapacity;
             item.PercentageOfPondStorage = Math.round10(item.PercentageOfPondStorage)
         })
-
+        // 桃園
         let result2 = [
     {
         "IANo": null,
@@ -832,8 +833,8 @@ const currentData = computed(() => comprehensiveDataStore);
 
 // getDatabaseTablesData()
 // 開始模擬
-function clickGetResult() {
-    getResult()
+async function clickGetResult() {
+    await getResult()
     router.push('/step2');
 }
 //石門水庫歷史蓄水量

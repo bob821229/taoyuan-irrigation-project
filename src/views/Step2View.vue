@@ -203,7 +203,7 @@
                 </template>
             </Card>
             <!-- 各工作站總配水量表 -->
-            <Card v-if="showTable" class='h-100 ' :key="irragationTrendChartDataForThisPage">
+            <Card v-if="showTable" class='h-100 '>
                 <template #header></template>
                 <template #title>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -213,7 +213,10 @@
                     </div>
                 </template>
                 <template #content>
-                    <WorkstationWaterNeedsTable :table-list="summaryByWorkstationData">
+                    <div v-if="isLoadingCompareData" class="text-center py-5">
+                        計算中...
+                    </div>
+                    <WorkstationWaterNeedsTable v-else :table-list="summaryByWorkstationData">
                     </WorkstationWaterNeedsTable>
                 </template>
             </Card>
@@ -230,19 +233,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, defineAsyncComponent } from 'vue'
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
 import { WaterNeedsCalculator } from '@/utils/WaterNeedsCalculator'
 import { WaterProvidingCalculator } from '@/utils/WaterProvidingCalculator'
 import CompareCombinationTableList from '../components/CompareCombinationTableList.vue';
 import WorkstationWaterNeedsTable from '../components/WorkstationWaterNeedsTable.vue'
 import CounterCard from '../components/CounterCard.vue';
-import SimpleEchart from '../components/SimpleEchart.vue';
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import Enumerable from "linq";
-import Maps from '../components/Maps.vue';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
+const SimpleEchart = defineAsyncComponent(() => import('../components/SimpleEchart.vue'));
+const Maps = defineAsyncComponent(() => import('../components/Maps.vue'));
 
 const mapConfigs = ref({
     showWaterGroup: false,//顯示水利小組
@@ -308,9 +311,10 @@ const totalPondStorage = computed(() => {
 
     return result
 })
-const showTable = ref(false);
-const showEcharts = ref(true);
+const showTable = ref(true);
+const showEcharts = ref(false);
 const showMaps = ref(true);
+const isLoadingCompareData = ref(false);
 const tooltipTxt = computed(() => {
     if (!showEcharts.value) {
         return { value: '顯示圖表資訊', showDelay: 300, hideDelay: 300 }
@@ -325,6 +329,9 @@ const comprehensiveDataStore = useComprehensiveDataStore();
 // const currentData = ref(employeeStore.tmpBasicInformation);
 const store = computed(() => comprehensiveDataStore);
 const summaryByWorkstationData = computed(() => {
+    if (store.value.compareSimulationData.outcomes == null) {
+        return [];
+    }
     let list = Enumerable.from(store.value.compareSimulationData.outcomes.summaryByWorkstation).where(f => solutionIrrigationGroupList.value.includes(f['灌區'])).toArray();
     return list;
 })
@@ -355,31 +362,36 @@ async function init() {
 
     await loadData(basicBaseDataFilterCallback);
 
-    waterProvidingCalculator.value = new WaterProvidingCalculator();
-    await waterProvidingCalculator.value.loadData();
+    // waterProvidingCalculator.value = new WaterProvidingCalculator();
+    // await waterProvidingCalculator.value.loadData();
 }
 // 比較用途的 設定
 const compareSettings = ref(null)
 const prefix = ref(null)
 async function loadData(baseDataFilterCallback) {
     console.log('@@loadData');
+    isLoadingCompareData.value = true;
     waterNeedsCalculator.value = new WaterNeedsCalculator();
 
-    compareSettings.value = copyJsonObject(store.value.userSettings.step1);
-    compareSettings.value.baseDataPath = store.value.userSettings.step2.baseDataPath
-    compareSettings.value.fieldWaterNeedPercentage = store.value.userSettings.step2.fieldWaterNeedPercentage;
+    try {
+        compareSettings.value = copyJsonObject(store.value.userSettings.step1);
+        compareSettings.value.baseDataPath = store.value.userSettings.step2.baseDataPath
+        compareSettings.value.fieldWaterNeedPercentage = store.value.userSettings.step2.fieldWaterNeedPercentage;
 
-    compareSettings.value.baseDataFilterCallback = baseDataFilterCallback;
+        compareSettings.value.baseDataFilterCallback = baseDataFilterCallback;
 
-    await waterNeedsCalculator.value.calculate(
-        compareSettings.value
-    );
+        await waterNeedsCalculator.value.calculate(
+            compareSettings.value
+        );
 
-    comprehensiveDataStore.compareSimulationData.baseData = await waterNeedsCalculator.value.getBaseData();     //基礎資料及運用基礎資料計算出的中繼結果(中繼結果是用來再計算以算出outcomes)
-    comprehensiveDataStore.compareSimulationData.outcomes = await waterNeedsCalculator.value.getOutcomes();
-    comprehensiveDataStore.compareSimulationData.reservoirWaterStoarage = await waterNeedsCalculator.value.getReservoirWaterStoarage();
-    comprehensiveDataStore.compareSimulationData.areaWaterNeedsByIrrigationGroup = await waterNeedsCalculator.value.getAreaWaterNeedsByIrrigationGroup();
-    prefix.value = waterNeedsCalculator.value.prefix;
+        comprehensiveDataStore.compareSimulationData.baseData = await waterNeedsCalculator.value.getBaseData();     //基礎資料及運用基礎資料計算出的中繼結果(中繼結果是用來再計算以算出outcomes)
+        comprehensiveDataStore.compareSimulationData.outcomes = await waterNeedsCalculator.value.getOutcomes();
+        comprehensiveDataStore.compareSimulationData.reservoirWaterStoarage = await waterNeedsCalculator.value.getReservoirWaterStoarage();
+        comprehensiveDataStore.compareSimulationData.areaWaterNeedsByIrrigationGroup = await waterNeedsCalculator.value.getAreaWaterNeedsByIrrigationGroup();
+        prefix.value = waterNeedsCalculator.value.prefix;
+    } finally {
+        isLoadingCompareData.value = false;
+    }
 
 }
 function basicBaseDataFilterCallback(_baseData) {
@@ -403,7 +415,9 @@ function copyJsonObject(obj) {
     return JSON.parse(JSON.stringify(obj));
 };
 onMounted(() => {
-    init()
+    setTimeout(() => {
+        init()
+    }, 0)
 })
 
 

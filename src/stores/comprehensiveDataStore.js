@@ -123,6 +123,11 @@ export const useComprehensiveDataStore = defineStore(
                     value: "/data/water-needs-base-data/field-water-need-list-planting-roc-year-88-90-avg-pond-current-storage-included-ia-20251113.json",
                     land_using_frequency: 8890,
                 },
+                {
+                    text: "計畫面積",
+                    value: "/data/water-needs-base-data/field-water-need-list-planting-planned-area.json",
+                    land_using_frequency: 666,
+                },
             ],
             //期作別
             farmingPeriodList: [
@@ -1143,7 +1148,7 @@ export const useComprehensiveDataStore = defineStore(
                         },
                         position: "left",
 
-                        // max: 25000,
+                        min: 0,
                     },
                     chartSeries: s,
                     // [
@@ -1447,7 +1452,7 @@ export const useComprehensiveDataStore = defineStore(
                         },
                         position: "left",
 
-                        // max: 25000,
+                        min: 0,
                     },
                     chartSeries: s,
                     // [

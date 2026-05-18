@@ -18,12 +18,17 @@
                         <span  @click="visibleLeft = true" class="pi pi-book" />
                         <!-- <Button icon="pi pi-file-pdf" @click="visibleLeft = true"></Button> -->
                     </div>
-                    <SimpleEchart :chart-width="'100%'" :chart-height="'80vh'"
+                    <div style="text-align: start; margin-top: 10px;font-weight:400;font-size:24px;">
+                        共計 {{ thousandth(irrigationStartDelayListData.dataSize) }} 筆 錯開組合
+                    </div>
+                    <SimpleEchart v-if="!showLoading" :chart-width="'100%'" :chart-height="'80vh'"
                         :chart-x-axis="scatterChartOptionData.chartXAxis"
                         :chart-y-axis="scatterChartOptionData.chartYAxis"
                         :chart-series="scatterChartOptionData.chartSeries"
                         :chart-title="scatterChartOptionData.chartTitle" :on-click-callback="chartClickCallback">
                     </SimpleEchart>
+                    <ProgressSpinner v-if="showLoading"/>
+                    
                 </template>
             </Card>
         </div>
@@ -46,11 +51,13 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted, computed } from 'vue'
+import { ref, watch, nextTick, watchEffect, onMounted, computed } from 'vue'
 import SimpleEchart from '../components/SimpleEchart.vue';
 import { WaterNeedsCalculator } from '@/utils/WaterNeedsCalculator'
 import { AgricultureCalendar } from '@/utils/AgricultureCalendar'
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
+
+import ProgressSpinner from 'primevue/progressspinner';
 
 
 import { ApiCaller } from "@/utils/ApiCallerModule";
@@ -60,6 +67,11 @@ import axios from 'axios';
 import Enumerable from 'linq'
 
 import { RouterLink, RouterView, useRouter } from 'vue-router'
+const showLoading = ref(false);
+// 加上千分位的函式
+function thousandth(num) {
+  return String(num).replace(/(\d)(?=(\d{3})+$)/g, "$1,");
+}
 const visibleLeft = ref(false);
 // 取得路由
 const router = useRouter();
@@ -93,8 +105,8 @@ const irrigationStartDelayListData = computed(() => {
                 //let keyList = g.key().split('||');
                 let solutionGroup = f.solutionName;//keyList[0];
                 let solutionGroupList = solutionGroup.split('、');
-                let dataSize = f.dataSize;
                 let obj = {
+                    dataSize:f.dataSize,
                     //   '桃一': (solutionGroup.indexOf('桃一') >= 0) ? 'V' : '',
                     //   '桃二': (solutionGroup.indexOf('桃二') >= 0) ? 'V' : '',
                     //   '桃三': (solutionGroup.indexOf('桃三') >= 0) ? 'V' : '',
@@ -128,129 +140,217 @@ async function fetchSourceList() {
 onMounted(() => {
     fetchSourceList()
 })
+const scatterChartOptionData = ref(null)
+const comboMap = ref(new Map())
+// Step 1: 快取 combinationList 為 Map
+watch(() => irrigationStartDelayListData.value.combinationList, (newList) => {
+  if (newList) {
+    const m = new Map()
+    newList.forEach(item => m.set(item.seq, item))
+    comboMap.value = m
+  }
+}, { immediate: true })
+// Step 2: 使用 watch 而非 computed，並搭配 nextTick、非同步調度
+watch([sourceList, comboMap], async () => {
+  if (!sourceList.value) {
+    scatterChartOptionData.value = {
+      chartXAxis: {/* empty config */},
+      chartYAxis: {/* empty config */},
+      chartSeries: [],
+      chartTitle: "目前無資料",
+    }
+    return
+  }
+
+  showLoading.value = true
+  await nextTick()  // 讓 loading 狀態先渲染
+
+  const arr = sourceList.value
+  // Step 3: 一次 reduce 遍歷取 min/max 以減少多次走訪
+  const { minX, maxX, minY, maxY } = arr.reduce((acc, f) => {
+    acc.minX = Math.min(acc.minX, f.peak)
+    acc.maxX = Math.max(acc.maxX, f.peak)
+    acc.minY = Math.min(acc.minY, f.sumAfter16)
+    acc.maxY = Math.max(acc.maxY, f.sumAfter16)
+    return acc
+  }, {
+    minX: Infinity, maxX: -Infinity,
+    minY: Infinity, maxY: -Infinity
+  })
+
+  // Step 4: 建 series 數據時用 Map 直接查
+  const seriesData = arr.map(f => {
+    const obj= { value: [f.peak, f.sumAfter16] }
+    const combo = comboMap.value.get(f.seq)
+    if (combo) {
+      obj.itemStyle = { color: 'red' }
+      obj.combo = combo
+    }
+    return obj
+  })
+
+  // Step 5: 組 chart option
+  scatterChartOptionData.value = {
+    chartXAxis: {
+      name: '尖峰用水量(萬噸)',
+      type: 'value',
+      position: 'bottom',
+      alignTicks: true,
+      nameLocation: 'middle',
+      nameGap: 30,
+      min: minX - 100,
+      max: maxX + 100,
+    },
+    chartYAxis: {
+      name: '16旬後用水(萬噸)',
+      type: 'value',
+      position: 'left',
+      nameLocation: 'middle',
+      nameGap: 50,
+      nameTextStyle: { verticalAlign: 'middle' },
+      min: minY - 100,
+      max: null,
+    },
+    chartSeries: [{
+      name: `${irrigationStartDelayListData.value.solutionName} - 最大尖峰用水量與16旬後用水量之關係`,
+      type: 'scatter',
+      data: seriesData,
+      symbolSize: 5,
+    }],
+    chartTitle: null,
+  }
+
+  showLoading.value = false
+}, { immediate: true, deep: true })
 // 把資料結構轉換成畫scatter echarts的格式
-const scatterChartOptionData = computed(() => {
-    if (sourceList.value == null) {
-        return {
-            chartXAxis: {
-                name: '尖峰用水量(萬噸)',
-                type: 'value',
-                position: 'bottom',
-                alignTicks: true,
-                nameLocation: 'middle',  // 設定 x 軸名稱在中間
-                nameGap: 30,  // 設定 x 軸名稱與 x 軸的垂直間距 50px
-                // min: 1000, 
-                // max: 1700, 
-                // min: minX - 100,
-                // max: maxX + 100,
-            },
-            chartYAxis: {
-                name: '16旬後用水(萬噸)',
-                type: 'value',
-                nameLocation: 'middle',  // 設定 y 軸名稱在中間
-                nameGap: 50,  // 設定 y 軸名稱與 y 軸的水平間距 20px
-                nameTextStyle: {
-                    //align: 'center',  // 文字對齊設定
-                    verticalAlign: 'middle'
-                },
-                position: 'left',
-                // min: minY - 100,
-                // max: maxY - 100
-                // min: 3000, 
-                // max: 7000, 
+// const scatterChartOptionData = computed(() => {
+//     if (sourceList.value == null) {
+//         return {
+//             chartXAxis: {
+//                 name: '尖峰用水量(萬噸)',
+//                 type: 'value',
+//                 position: 'bottom',
+//                 alignTicks: true,
+//                 nameLocation: 'middle',  // 設定 x 軸名稱在中間
+//                 nameGap: 30,  // 設定 x 軸名稱與 x 軸的垂直間距 50px
+//                 // min: 1000, 
+//                 // max: 1700, 
+//                 // min: minX - 100,
+//                 // max: maxX + 100,
+//             },
+//             chartYAxis: {
+//                 name: '16旬後用水(萬噸)',
+//                 type: 'value',
+//                 nameLocation: 'middle',  // 設定 y 軸名稱在中間
+//                 nameGap: 50,  // 設定 y 軸名稱與 y 軸的水平間距 20px
+//                 nameTextStyle: {
+//                     //align: 'center',  // 文字對齊設定
+//                     verticalAlign: 'middle'
+//                 },
+//                 position: 'left',
+//                 // min: minY - 100,
+//                 // max: maxY - 100
+//                 // min: 3000, 
+//                 // max: 7000, 
 
-                //max: 1400,
-            },
-            chartSeries: [],
-            chartTitle: "目前無資料",
-        };
-    }
+//                 //max: 1400,
+//             },
+//             chartSeries: [],
+//             chartTitle: "目前無資料",
+//         };
+//     }
+//     //   let sourceList = sourceList.value;
+//     let q = Enumerable.from(sourceList.value);
+//     let minX = q.min(f => f.peak);
+//     let maxX = q.max(f => f.peak);
+//     let minY = q.min(f => f.sumAfter16);
+//     let maxY = q.max(f => f.sumAfter16);
+//     showLoading.value = true;
+//     let series = sourceList.value.map((f, idx) => {
+//         let obj = {
+//             value: [f.peak, f.sumAfter16],
+//             //itemStyle: {color: 'red'}s
+//         };
 
-    //   let sourceList = sourceList.value;
-    let q = Enumerable.from(sourceList.value);
-    let minX = q.min(f => f.peak);
-    let maxX = q.max(f => f.peak);
-    let minY = q.min(f => f.sumAfter16);
-    let maxY = q.max(f => f.sumAfter16);
-
-    let series = sourceList.value.map((f, idx) => {
-        let obj = {
-            value: [f.peak, f.sumAfter16],
-            //itemStyle: {color: 'red'}
-        };
-
-        let q = Enumerable.from(irrigationStartDelayListData.value.combinationList).where(itx => itx.seq == f.seq).firstOrDefault();
-        if (q != null) {
-            obj.itemStyle = { color: 'red' };
-            obj.symbolSize = 15;
-            obj.combo = q;
-        }
-        return obj;
-    }
-    );
-    console.log('scatterChartOptionData', series);
-    let chartSeries = [
-        {
-            name: `${irrigationStartDelayListData.value.solutionName} - 最大尖峰用水量與16旬後用水量之關係`,
-            type: 'scatter',
-            data:
-                series,
-            // [
-            //     [10, 20],
-            //     [15, 25],
-            //     [20, 30],
-            //     [25, 35],
-            //     [30, 40]
-            // ],
-            symbolSize: 5
-        }
-    ];
+//         let q = Enumerable.from(irrigationStartDelayListData.value.combinationList).where(itx => itx.seq == f.seq).firstOrDefault();
+//         if (q != null) {
+//             let dataSize = irrigationStartDelayListData.value.dataSize;
+//             // if( dataSize >10000){
+//             //     obj.symbolSize = 15;
+//             // }else if(dataSize >1000){
+//             //     obj.symbolSize = 12;
+//             // }else{
+//             //     obj.symbolSize = 10
+//             // }
+//             obj.itemStyle = { color: 'red' };
+//             obj.combo = q;
+//         }
+//         return obj;
+//     }
+//     );
+//     console.log('scatterChartOptionData', series);
+//     let chartSeries = [
+//         {
+//             name: `${irrigationStartDelayListData.value.solutionName} - 最大尖峰用水量與16旬後用水量之關係`,
+//             type: 'scatter',
+//             data:
+//                 series,
+//             // [
+//             //     [10, 20],
+//             //     [15, 25],
+//             //     [20, 30],
+//             //     [25, 35],
+//             //     [30, 40]
+//             // ],
+//             symbolSize: 5
+//         }
+//     ];
 
 
-    let option = {
-        chartXAxis: {
-            name: '尖峰用水量(萬噸)',
-            type: 'value',
+//     let option = {
+//         chartXAxis: {
+//             name: '尖峰用水量(萬噸)',
+//             type: 'value',
 
-            position: 'bottom',
-            alignTicks: true,
-            nameLocation: 'middle',  // 設定 x 軸名稱在中間
-            nameGap: 30,  // 設定 x 軸名稱與 x 軸的垂直間距 50px
-            // min: 1000, 
-            // max: 1700, 
-            min: minX - 100,
-            max: maxX + 100,
-        },
-        chartYAxis: {
-            name: '16旬後用水(萬噸)',
-            type: 'value',
+//             position: 'bottom',
+//             alignTicks: true,
+//             nameLocation: 'middle',  // 設定 x 軸名稱在中間
+//             nameGap: 30,  // 設定 x 軸名稱與 x 軸的垂直間距 50px
+//             // min: 1000, 
+//             // max: 1700, 
+//             min: minX - 100,
+//             max: maxX + 100,
+//         },
+//         chartYAxis: {
+//             name: '16旬後用水(萬噸)',
+//             type: 'value',
 
-            nameLocation: 'middle',  // 設定 y 軸名稱在中間
-            nameGap: 50,  // 設定 y 軸名稱與 y 軸的水平間距 20px
-            nameTextStyle: {
-                //align: 'center',  // 文字對齊設定
-                verticalAlign: 'middle'
-            },
-            position: 'left',
+//             nameLocation: 'middle',  // 設定 y 軸名稱在中間
+//             nameGap: 50,  // 設定 y 軸名稱與 y 軸的水平間距 20px
+//             nameTextStyle: {
+//                 //align: 'center',  // 文字對齊設定
+//                 verticalAlign: 'middle'
+//             },
+//             position: 'left',
 
-            min: minY - 100,
-            max: maxY - 100
-            // min: 3000, 
-            // max: 7000, 
+//             min: minY - 100,
+//             max: maxY - 100
+//             // min: 3000, 
+//             // max: 7000, 
 
-            //max: 1400,
-        },
-        chartSeries: chartSeries,
-        chartTitle: null,
-    }
-    option.chartYAxis.max = null;
-    //   if (this.ifSameScale) {
-    //     option.chartYAxis.max = this.chartYMaxScale;
-    //   } else {
-    //   }
-
-    return option;
-})
+//             //max: 1400,
+//         },
+//         chartSeries: chartSeries,
+//         chartTitle: null,
+//     }
+//     option.chartYAxis.max = null;
+//     //   if (this.ifSameScale) {
+//     //     option.chartYAxis.max = this.chartYMaxScale;
+//     //   } else {
+//     //   }
+//     showLoading.value = false;
+//     return option;
+// })
 async function chartClickCallback(param) {
     console.log('chartClickCallback!', param);
     //判斷是否有資料，若無則不執行
