@@ -64,7 +64,7 @@
                         </span>
                         <Button icon="pi  pi-table" class="echarts_trigger"
                             v-tooltip.bottom="{ value: '顯示各工作站總配水量表', showDelay: 300, hideDelay: 300 }" type="text"
-                            placeholder="Bottom" @click="showTable = !showTable" />
+                            placeholder="Bottom" @click="toggleWorkstationTable" />
                     </div>
                 </template>
                 <template #content>
@@ -102,7 +102,7 @@
         <!-- 右邊 顯示區域 -->
         <div class="col-md-6">
             <!-- 灌區及種植坵塊地圖 -->
-            <Card v-if="showMaps && !showTable" class='h-100 ' :key="mapKey">
+            <Card v-if="shouldMountMapPanel" v-show="showMaps && !showTable" class='h-100 '>
                 <template #header></template>
                 <template #title>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -124,7 +124,8 @@
                             </div>
                             <div class="d-flex gap-1 align-items-center">
                                 種植坵塊:
-                                <ToggleSwitch v-model="mapConfigs.showPlantingMound" />
+                                <ToggleSwitch v-model="mapConfigs.showPlantingMound"
+                                    :disabled="!canShowPlantingMound" />
                             </div>
 
 
@@ -174,7 +175,7 @@
                 </template>
             </Card>
             <!-- 供灌模擬驗證圖 -->
-            <Card v-if="!showMaps && !showTable" class='h-100 ' :key="irragationTrendChartDataForThisPage">
+            <Card v-if="!showMaps && !showTable" class='h-100 '>
                 <template #header></template>
                 <template #title>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -213,10 +214,10 @@
                     </div>
                 </template>
                 <template #content>
-                    <div v-if="isLoadingCompareData" class="text-center py-5">
+                    <div v-if="isLoadingCompareData || isPreparingWorkstationTable" class="text-center py-5">
                         計算中...
                     </div>
-                    <WorkstationWaterNeedsTable v-else :table-list="summaryByWorkstationData">
+                    <WorkstationWaterNeedsTable v-else :table-list="workstationTableRows">
                     </WorkstationWaterNeedsTable>
                 </template>
             </Card>
@@ -233,10 +234,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, defineAsyncComponent } from 'vue'
+import { ref, onMounted, computed, defineAsyncComponent, watch } from 'vue'
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
-import { WaterNeedsCalculator } from '@/utils/WaterNeedsCalculator'
 import { WaterProvidingCalculator } from '@/utils/WaterProvidingCalculator'
+import { applySimulationResult, cloneJson, runWaterNeedsSimulation } from '@/services/irrigationSimulationService'
 import CompareCombinationTableList from '../components/CompareCombinationTableList.vue';
 import WorkstationWaterNeedsTable from '../components/WorkstationWaterNeedsTable.vue'
 import CounterCard from '../components/CounterCard.vue';
@@ -249,16 +250,8 @@ const Maps = defineAsyncComponent(() => import('../components/Maps.vue'));
 
 const mapConfigs = ref({
     showWaterGroup: false,//顯示水利小組
-    showPlantingMound: true,//顯示種植坵塊
+    showPlantingMound: false,//顯示種植坵塊
 })
-const mapKey = computed(() => {
-    let land_using_frequency = JSON.stringify(store.value.baseDataPlantingAreaPathPickedData)
-    let solutionUserPicked = JSON.stringify(store.value.solutionUserPicked.irrigationCombination)
-    let mapConfig = JSON.stringify(mapConfigs.value)
-
-    return land_using_frequency + solutionUserPicked + mapConfig
-})
-
 const waterShortage = computed(() => {
     let availableWaterForAgricultureData = 0
     let totalWaterNeeds = 0
@@ -314,7 +307,11 @@ const totalPondStorage = computed(() => {
 const showTable = ref(true);
 const showEcharts = ref(false);
 const showMaps = ref(true);
+const shouldMountMapPanel = ref(showMaps.value && !showTable.value);
 const isLoadingCompareData = ref(false);
+const isPreparingWorkstationTable = ref(false);
+const workstationTableRows = ref([]);
+let workstationTableBuildId = 0;
 const tooltipTxt = computed(() => {
     if (!showEcharts.value) {
         return { value: '顯示圖表資訊', showDelay: 300, hideDelay: 300 }
@@ -328,6 +325,26 @@ const comprehensiveDataStore = useComprehensiveDataStore();
 //目前顯示的資料
 // const currentData = ref(employeeStore.tmpBasicInformation);
 const store = computed(() => comprehensiveDataStore);
+const canShowPlantingMound = computed(() => store.value.solutionUserPicked.irrigationCombination != null);
+watch(
+    () => store.value.solutionUserPicked.irrigationCombination,
+    (pickedCombination) => {
+        if (pickedCombination == null) {
+            mapConfigs.value.showPlantingMound = false;
+        }
+        if (showTable.value) {
+            prepareWorkstationTableRows();
+        }
+    }
+);
+watch(
+    () => [showMaps.value, showTable.value],
+    ([isShowingMap, isShowingTable]) => {
+        if (isShowingMap && !isShowingTable) {
+            shouldMountMapPanel.value = true;
+        }
+    }
+);
 const summaryByWorkstationData = computed(() => {
     if (store.value.compareSimulationData.outcomes == null) {
         return [];
@@ -335,6 +352,64 @@ const summaryByWorkstationData = computed(() => {
     let list = Enumerable.from(store.value.compareSimulationData.outcomes.summaryByWorkstation).where(f => solutionIrrigationGroupList.value.includes(f['灌區'])).toArray();
     return list;
 })
+function getRowIrrigationGroup(row, selectedGroups) {
+    return Object.values(row).find(value => selectedGroups.has(value));
+}
+function buildWorkstationTableRows() {
+    const summaryByWorkstation = store.value.compareSimulationData.outcomes?.summaryByWorkstation;
+    if (!summaryByWorkstation) {
+        return [];
+    }
+
+    const selectedGroups = new Set(solutionIrrigationGroupList.value);
+    return summaryByWorkstation.filter(row => selectedGroups.has(getRowIrrigationGroup(row, selectedGroups)));
+}
+function prepareWorkstationTableRows() {
+    const buildId = ++workstationTableBuildId;
+    const summaryByWorkstation = store.value.compareSimulationData.outcomes?.summaryByWorkstation ?? [];
+    const selectedGroups = new Set(solutionIrrigationGroupList.value);
+    const rows = [];
+    const chunkSize = 500;
+    let cursor = 0;
+
+    isPreparingWorkstationTable.value = true;
+    workstationTableRows.value = [];
+
+    function processChunk() {
+        if (buildId !== workstationTableBuildId) {
+            return;
+        }
+
+        const end = Math.min(cursor + chunkSize, summaryByWorkstation.length);
+        for (; cursor < end; cursor++) {
+            const row = summaryByWorkstation[cursor];
+            if (selectedGroups.has(getRowIrrigationGroup(row, selectedGroups))) {
+                rows.push(row);
+            }
+        }
+
+        if (cursor < summaryByWorkstation.length) {
+            setTimeout(processChunk, 0);
+            return;
+        }
+
+        workstationTableRows.value = rows;
+        isPreparingWorkstationTable.value = false;
+    }
+
+    setTimeout(processChunk, 0);
+}
+function toggleWorkstationTable() {
+    if (showTable.value) {
+        workstationTableBuildId++;
+        isPreparingWorkstationTable.value = false;
+        showTable.value = false;
+        return;
+    }
+
+    showTable.value = true;
+    prepareWorkstationTableRows();
+}
 const solutionIrrigationGroupList = computed(() => {
     if (store.value.solutionUserPicked.irrigationCombination != null) {
 
@@ -353,7 +428,6 @@ const workstationOptions = computed(() => {
 const router = useRouter();
 
 //計算公式js
-const waterNeedsCalculator = ref(null);
 //計算公式js
 const waterProvidingCalculator = ref(null);
 // 初始化
@@ -371,24 +445,18 @@ const prefix = ref(null)
 async function loadData(baseDataFilterCallback) {
     console.log('@@loadData');
     isLoadingCompareData.value = true;
-    waterNeedsCalculator.value = new WaterNeedsCalculator();
 
     try {
-        compareSettings.value = copyJsonObject(store.value.userSettings.step1);
+        compareSettings.value = cloneJson(store.value.userSettings.step1);
         compareSettings.value.baseDataPath = store.value.userSettings.step2.baseDataPath
         compareSettings.value.fieldWaterNeedPercentage = store.value.userSettings.step2.fieldWaterNeedPercentage;
 
-        compareSettings.value.baseDataFilterCallback = baseDataFilterCallback;
-
-        await waterNeedsCalculator.value.calculate(
-            compareSettings.value
-        );
-
-        comprehensiveDataStore.compareSimulationData.baseData = await waterNeedsCalculator.value.getBaseData();     //基礎資料及運用基礎資料計算出的中繼結果(中繼結果是用來再計算以算出outcomes)
-        comprehensiveDataStore.compareSimulationData.outcomes = await waterNeedsCalculator.value.getOutcomes();
-        comprehensiveDataStore.compareSimulationData.reservoirWaterStoarage = await waterNeedsCalculator.value.getReservoirWaterStoarage();
-        comprehensiveDataStore.compareSimulationData.areaWaterNeedsByIrrigationGroup = await waterNeedsCalculator.value.getAreaWaterNeedsByIrrigationGroup();
-        prefix.value = waterNeedsCalculator.value.prefix;
+        const result = await runWaterNeedsSimulation(compareSettings.value, baseDataFilterCallback);
+        applySimulationResult(comprehensiveDataStore.compareSimulationData, result);
+        prefix.value = result.prefix;
+        if (showTable.value) {
+            prepareWorkstationTableRows();
+        }
     } finally {
         isLoadingCompareData.value = false;
     }
@@ -435,7 +503,7 @@ const reservoirWaterStoarageYearListData = computed(() => {
 })
 //加上特定年的選項
 const irragationTrendChartDataForThisPage = computed(() => {
-    let optionData = copyJsonObject(store.value.irragationTrendChartData);
+    let optionData = cloneJson(store.value.irragationTrendChartData);
     if (pickedYear.value != null) {
         let minTendaysNumber = 4
         let maxTendaysNumber = optionData.chartXAxis.data.length + minTendaysNumber - 1;

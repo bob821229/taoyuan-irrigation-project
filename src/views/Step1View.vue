@@ -227,7 +227,7 @@ import WaterBox from '@/components/WaterBox.vue'
 import Enumerable from 'linq'
 import { apiGetData } from '../apis/api'
 import dayjs from 'dayjs'
-import { WaterNeedsCalculator } from '@/utils/WaterNeedsCalculator'
+import { applySimulationResult, runWaterNeedsSimulation } from '@/services/irrigationSimulationService'
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
 const visibleLeft = ref(false)
 const showPoundInfo = ref(false)
@@ -847,7 +847,6 @@ async function getDatabaseTablesData() {
         console.log(error);
     }
 }
-const waterNeedsCalculator = ref(null);
 //根據模擬日期=>設定蓄水量
 function setSimulationWaterStorage() {
     let date = comprehensiveDataStore.userSettings.step1.decisionMakingDate
@@ -863,15 +862,8 @@ function setSimulationWaterStorage() {
 }
 async function getResult() {
     comprehensiveDataStore.userSettings.step2.baseDataPath = comprehensiveDataStore.userSettings.step1.baseDataPath
-    waterNeedsCalculator.value = new WaterNeedsCalculator();
-    await waterNeedsCalculator.value.calculate(comprehensiveDataStore.userSettings.step1);
-
-    comprehensiveDataStore.simulationData.baseData = await waterNeedsCalculator.value.getBaseData();     //基礎資料及運用基礎資料計算出的中繼結果(中繼結果是用來再計算以算出outcomes)
-    comprehensiveDataStore.simulationData.outcomes = await waterNeedsCalculator.value.getOutcomes();
-    comprehensiveDataStore.simulationData.reservoirWaterStoarage = await waterNeedsCalculator.value.getReservoirWaterStoarage();
-    comprehensiveDataStore.simulationData.areaWaterNeedsByIrrigationGroup = await waterNeedsCalculator.value.getAreaWaterNeedsByIrrigationGroup();
-
-    
+    const result = await runWaterNeedsSimulation(comprehensiveDataStore.userSettings.step1);
+    applySimulationResult(comprehensiveDataStore.simulationData, result);
 }
 onMounted(async () => {
     await getDatabaseTablesData()

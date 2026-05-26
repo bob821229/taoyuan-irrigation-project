@@ -1,6 +1,10 @@
 import { ref, computed, reactive, watch } from "vue";
 import { defineStore } from "pinia";
-import { WaterNeedsCalculator } from "@/utils/WaterNeedsCalculator";
+import {
+    applySimulationResult,
+    buildStepCompareSettings,
+    runWaterNeedsSimulation,
+} from "@/services/irrigationSimulationService";
 import Enumerable from "linq";
 export const useComprehensiveDataStore = defineStore(
     "comprehensiveDataStore",
@@ -1636,19 +1640,11 @@ export const useComprehensiveDataStore = defineStore(
         async function loadDataFromCombinationUserPicked1(
             baseDataFilterCallback
         ) {
-            let _waterNeedsCalculator = new WaterNeedsCalculator();
-
-            let c = await loadDataFromCombinationUserPicked(
-                _waterNeedsCalculator,
-                userSettings.value,
+            const c = await runWaterNeedsSimulation(
+                buildStepCompareSettings(userSettings.value, baseDataFilterCallback),
                 baseDataFilterCallback
             );
-            combinationUserPickedSimulationData.baseData = c.baseData; //基礎資料及運用基礎資料計算出的中繼結果(中繼結果是用來再計算以算出outcomes)
-            combinationUserPickedSimulationData.outcomes = c.outcomes;
-            combinationUserPickedSimulationData.reservoirWaterStoarage =
-                c.reservoirWaterStoarage;
-            combinationUserPickedSimulationData.areaWaterNeedsByIrrigationGroup =
-                c.areaWaterNeedsByIrrigationGroup;
+            applySimulationResult(combinationUserPickedSimulationData, c);
         }
         return {
             count,

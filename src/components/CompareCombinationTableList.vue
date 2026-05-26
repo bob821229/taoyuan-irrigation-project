@@ -15,7 +15,7 @@
             </thead>
             <tbody>
                 <!--@click="combinationPicked(combo)" -->
-                <tr v-for="(combo, comboIdx) in store.allCombinationListData" :key="comboIdx">
+                <tr v-for="combo in pagedCombinationList" :key="`${combo.title}-${combo.rank}`">
                     <td class="bg-opacity-50 text-center" :class="getRowStyleByRank(combo.rank)">
                         <input type="radio" :value="combo" id="irrigationCombination"
                             v-model="store.solutionUserPicked.irrigationCombination">
@@ -41,21 +41,35 @@
             </tbody>
         </table>
     </div>
+    <div class="pagination-toolbar">
+        <Button size="small" text icon="pi pi-angle-left" :disabled="currentPage <= 1" @click="currentPage--" />
+        <span>{{ currentPage }} / {{ totalPages }}，共 {{ totalCount.toLocaleString() }} 筆</span>
+        <Button size="small" text icon="pi pi-angle-right" :disabled="currentPage >= totalPages" @click="currentPage++" />
+    </div>
 </template>
 
 <script setup>
-import { ref, computed, watch,onMounted } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
 import { RouterLink, RouterView, useRouter } from 'vue-router'
-onMounted(() => {
-    console.log("@@方案清單已掛載");
-})
 // 取得路由
 const router = useRouter();
 //取得 資料store
 const comprehensiveDataStore = useComprehensiveDataStore();
 //目前顯示的資料
 const store = computed(() => comprehensiveDataStore);
+const pageSize = 100;
+const currentPage = ref(1);
+const totalCount = computed(() => store.value.allCombinationListData.length);
+const totalPages = computed(() => Math.max(1, Math.ceil(totalCount.value / pageSize)));
+const pagedCombinationList = computed(() => {
+    const start = (currentPage.value - 1) * pageSize;
+    return store.value.allCombinationListData.slice(start, start + pageSize);
+});
+
+watch(totalCount, () => {
+    currentPage.value = 1;
+});
 
 // const props = defineProps({
 //     allCombinationListData: Array,
@@ -154,5 +168,15 @@ tbody tr:hover {
 
 .pi {
     cursor: pointer;
+}
+
+.pagination-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #475569;
 }
 </style>

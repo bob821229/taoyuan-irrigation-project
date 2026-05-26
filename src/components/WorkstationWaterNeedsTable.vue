@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 <tr v-for="(row, rIdx) in tableListData" :key="'r' + rIdx">
-                    <td v-if="getRowSpanObject(rIdx) != null" :rowspan="getRowSpanObject(rIdx).span"
+                    <td v-if="rowSpanByIndex[rIdx] != null" :rowspan="rowSpanByIndex[rIdx].span"
                         class="text-center align-middle">
                         <h4>{{ row['灌區'] }}</h4>
                     </td>
@@ -24,7 +24,7 @@
                         class="text-end" :class="fieldObject.classList">
                         {{ display(row, fieldObject.originalFieldName, fieldObject.display) }}
                     </td>
-                    <td v-if="getRowSpanObject(rIdx) != null" :rowspan="getRowSpanObject(rIdx).span"
+                    <td v-if="rowSpanByIndex[rIdx] != null" :rowspan="rowSpanByIndex[rIdx].span"
                         class="text-center align-middle">
                         <h4>{{ round10(summaryByIrrigationGroup[row['灌區']], 0).toLocaleString() }}</h4>
                     </td>
@@ -108,10 +108,10 @@ const rowSpanDataMappings=ref([
           field: '石二'
         },
       ])
-      const props = defineProps({
+const props = defineProps({
     tableList: {
-        type: Object,
-        default: null,
+        type: Array,
+        default: () => [],
     }
 }
 )
@@ -179,6 +179,12 @@ const rowSpanDataMappingsData = computed(() => {
     });
 
     return list;
+})
+const rowSpanByIndex = computed(() => {
+    return rowSpanDataMappingsData.value.reduce((lookup, item) => {
+        lookup[item.rowIdx] = item;
+        return lookup;
+    }, {});
 })
 const summaryByIrrigationGroup = computed(() => {
     let newList = Enumerable.from(tableListData.value)

@@ -1,39 +1,36 @@
 <template>
-  <div class="mapView " :id="mapId">
+  <div class="mapShell">
+    <div v-if="mapStatus === 'idle'" class="mapState">
+      地圖尚未載入
+      <Button class="mt-2" size="small" label="載入地圖" @click="loadMap" />
+    </div>
+    <div v-if="mapStatus === 'loading'" class="mapState">
+      地圖載入中...
+    </div>
+    <div v-if="mapStatus === 'error'" class="mapState mapStateError">
+      地圖服務暫時無法載入，請稍後再試。
+      <Button class="mt-2" size="small" label="重新載入地圖" @click="reloadMap" />
+    </div>
+    <div class="mapView" :id="mapId" :class="{ isHidden: mapStatus !== 'ready' }">
+    </div>
   </div>
   <!-- {{ store.baseDataPlantingAreaPathPickedData }} -->
 </template>
 
 <script setup>
 import { v4 as uuidv4 } from 'uuid';
-import { ref, watchEffect, onMounted, computed, watch, toRaw } from 'vue';
+import { ref, onMounted, computed, watch, toRaw, onUnmounted, nextTick } from 'vue';
 import { useComprehensiveDataStore } from '../stores/comprehensiveDataStore';
 import { MapConfigs } from '@/utils/esri-map/map-configs';
 import Enumerable from "linq";
-
-import esriConfig from "@arcgis/core/config.js";
-import Map from "@arcgis/core/Map";
-import WebMap from "@arcgis/core/WebMap.js";
-import TileLayer from "@arcgis/core/layers/TileLayer.js";
-import MapImageLayer from "@arcgis/core/layers/MapImageLayer.js";
-import MapView from "@arcgis/core/views/MapView";
-
-import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
-import TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
-import Query from "@arcgis/core/rest/support/Query.js";
-import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer.js";
-
-import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import WebTileLayer from "@arcgis/core/layers/WebTileLayer";
-
-
-import * as geometryEngine from "@arcgis/core/geometry/geometryEngine.js";
-import Basemap from "@arcgis/core/Basemap.js";
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
 const props = defineProps({
-  mapConfigs: Object,
+  mapConfigs: {
+    type: Object,
+    default: () => ({
+      showWaterGroup: false,
+      showPlantingMound: false,
+    }),
+  },
 })
 //取得 資料store
 const comprehensiveDataStore = useComprehensiveDataStore();
@@ -41,29 +38,116 @@ const comprehensiveDataStore = useComprehensiveDataStore();
 const store = computed(() => comprehensiveDataStore);
 
 const mapId = ref(uuidv4());
+const mapStatus = ref('idle');
 const mapConfigs = ref(null);
 const mapProfile = ref({
   mapView: {},
+  mapImageLayer: null,
   subLayers: {},
 })
-function init() {
+
+const MAP_SERVICE_URL = "https://gisportal.triwra.org.tw/server/rest/services/BigBossTaoyuanPonds/MapServer";
+const MAP_SERVICE_TIMEOUT_MS = 5000;
+const MAP_VIEW_TIMEOUT_MS = 9000;
+
+let mapModules = null;
+let isDisposed = false;
+let mapBootId = 0;
+
+function runWhenBrowserIsIdle(callback) {
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(callback, { timeout: 800 });
+    return;
+  }
+  setTimeout(callback, 120);
+}
+
+async function loadMapModules() {
+  if (mapModules) {
+    return mapModules;
+  }
+
+  const [MapModule, MapImageLayerModule, MapViewModule, GraphicsLayerModule] = await Promise.all([
+    import("@arcgis/core/Map"),
+    import("@arcgis/core/layers/MapImageLayer.js"),
+    import("@arcgis/core/views/MapView"),
+    import("@arcgis/core/layers/GraphicsLayer.js"),
+  ]);
+
+  mapModules = {
+    Map: MapModule.default,
+    MapImageLayer: MapImageLayerModule.default,
+    MapView: MapViewModule.default,
+    GraphicsLayer: GraphicsLayerModule.default,
+  };
+  return mapModules;
+}
+
+function withTimeout(promise, timeoutMs, message) {
+  let timeoutId = null;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
+  });
+
+  return Promise.race([promise, timeoutPromise]).finally(() => {
+    clearTimeout(timeoutId);
+  });
+}
+
+async function assertMapServiceAvailable() {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), MAP_SERVICE_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(`${MAP_SERVICE_URL}?f=json`, {
+      cache: 'no-store',
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Map service responded with ${response.status}`);
+    }
+
+    const serviceInfo = await response.json();
+    if (serviceInfo?.error) {
+      throw new Error(serviceInfo.error.message || 'Map service returned an error');
+    }
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function init(bootId) {
+  mapStatus.value = 'loading';
+  await assertMapServiceAvailable();
+  if (isDisposed || bootId !== mapBootId) {
+    return;
+  }
+
+  const { Map, MapImageLayer, MapView, GraphicsLayer } = await loadMapModules();
+  if (isDisposed || bootId !== mapBootId) {
+    return;
+  }
+
   mapConfigs.value = new MapConfigs(
     {
       sublayerVisibilities: {
         '16': { visible: true },
-        '25': { visible: true },
-        '11': { visible: true },
-        '39': { visible: props.mapConfigs.showPlantingMound },
-        '13': { visible: props.mapConfigs.showWaterGroup},
+        '25': { visible: false },
+        '11': { visible: false },
+        '39': { visible: false },
+        '13': { visible: props.mapConfigs.showWaterGroup },
         // '10': { visible: props.mapConfigs.showWaterGroup },
       }
     }
   );
+  const sublayers = mapConfigs.value
+    .getSublayers()
+    .filter((sublayer) => [13, 16, 39].includes(sublayer.id));
   let mapImagelayer = new MapImageLayer({
     //gis Map Image Layer
-    url:
-      "https://gisportal.triwra.org.tw/server/rest/services/BigBossTaoyuanPonds/MapServer",
-    sublayers: mapConfigs.value.getSublayers()
+    url: MAP_SERVICE_URL,
+    sublayers
   });
   // console.log('mapImagelayer:', mapImagelayer);
   let highlightGraphicsLayer = new GraphicsLayer();
@@ -84,7 +168,7 @@ function init() {
   let view = new MapView({
     map: map,
     // map: webmap,
-    //center: [121.2230158, 24.9536558], // Longitude, latitude
+    center: [121.2230158, 24.9536558], // Longitude, latitude
     zoom: 10, // Zoom level
     container: mapId.value,  // Div element
     constraints: {
@@ -115,6 +199,7 @@ function init() {
 
   view.ui.components = [];
   mapProfile.value.mapView = view;
+  mapProfile.value.mapImageLayer = mapImagelayer;
   // this.mapProfile.subLayers.associationLayer = mapImagelayer.findSublayerById(15);
   mapProfile.value.subLayers.workstationLayer = mapImagelayer.findSublayerById(13);
   mapProfile.value.subLayers.groupLayer = mapImagelayer.findSublayerById(10);//水利小組
@@ -130,7 +215,11 @@ function init() {
   // this.mapProfile.subLayers.territoryGraphicsLayer = territoryGraphicsLayer;
   mapProfile.value.subLayers.farmingDensity = mapImagelayer.findSublayerById(39);//坵塊
 
-  view.when(() => {
+  await withTimeout(view.when(() => {
+    if (isDisposed || bootId !== mapBootId) {
+      return;
+    }
+
     view.on('click', (a, b, c) => {
       // console.log('view click', a, b, c);
     });
@@ -139,20 +228,68 @@ function init() {
       // console.log("Updated scale: ", newScale);
     });
 
-    fitAndCeneterMap(view, mapImagelayer);
+    updateMapLayers();
+    mapStatus.value = 'ready';
 
+  }), MAP_VIEW_TIMEOUT_MS, 'Map view initialization timed out');
+}
+async function bootMap() {
+  const bootId = ++mapBootId;
+  try {
+    await init(bootId);
+  } catch (error) {
+    console.error('ArcGIS map init failed:', error);
+    if (bootId === mapBootId && !isDisposed) {
+      mapBootId++;
+      destroyMap();
+      mapStatus.value = 'error';
+    }
+  }
+}
+function reloadMap() {
+  mapBootId++;
+  destroyMap();
+  mapId.value = uuidv4();
+  nextTick(() => runWhenBrowserIsIdle(() => {
+    if (!isDisposed) {
+      bootMap();
+    }
+  }));
+}
+function loadMap() {
+  reloadMap();
+}
+function updateMapLayers() {
+  if (!mapConfigs.value || !mapProfile.value.mapView) {
+    return;
+  }
+
+  const farmingDensity = toRaw(mapProfile.value.subLayers.farmingDensity);
+  const workstationLayer = toRaw(mapProfile.value.subLayers.workstationLayer);
+  const hasPickedCombination = store.value.solutionUserPicked.irrigationCombination != null;
+  const shouldShowPlantingMound = props.mapConfigs.showPlantingMound && hasPickedCombination;
+
+  if (farmingDensity) {
+    farmingDensity.visible = shouldShowPlantingMound;
+  }
+  if (workstationLayer) {
+    workstationLayer.visible = props.mapConfigs.showWaterGroup;
+  }
+
+  if (shouldShowPlantingMound) {
     toggleMapFarmingFrequency();
-    toggleMapIrrigationGroup();
-    // toggleMapWaterGroup();
-    toggleMapWorkstation();
-
-  })
+  } else if (farmingDensity) {
+    farmingDensity.definitionExpression = "1 = 2";
+  }
+  toggleMapIrrigationGroup();
+  toggleMapWorkstation();
 }
 // 根據使用者選擇的方案 篩選出對灌區的大標題
 function toggleMapIrrigationGroup() {
   //   console.log('##toggleMapIrrigationGroup');
   //console.log('baseDataPlantingAreaPathPickedData: ', this.baseDataPlantingAreaPathPickedData);
   let _layer = toRaw(mapProfile.value.subLayers.irrigationGroupLayer);
+  if (!_layer) return;
 
   _layer.renderer = {
     type: "unique-value",
@@ -174,6 +311,7 @@ function toggleMapIrrigationGroup() {
 function toggleMapWaterGroup() {
   // console.log('##toggleMapWaterGroup');
   let _layer = toRaw(mapProfile.value.subLayers.groupLayer);
+  if (!_layer) return;
 
   _layer.renderer = {
     type: "unique-value",
@@ -212,6 +350,7 @@ function toggleMapWaterGroup() {
 function toggleMapWorkstation() {
   // console.log('##toggleMapWorkstation');
   let _layer = toRaw(mapProfile.value.subLayers.workstationLayer);
+  if (!_layer) return;
 
   _layer.renderer = {
     type: "unique-value",
@@ -246,49 +385,15 @@ function toggleMapWorkstation() {
   // console.log("*_labelStyle:", _labelStyle);
 
 }
-function fitAndCeneterMap(_view, _mapImageLayer) {
-  let combinedExtent = null;
-
-  // Prepare a query to fetch only visible features for each sublayer
-  const query = new Query();
-  query.where = "1=1"; // Adjust this as needed, or keep to get all features
-  query.returnGeometry = true;
-  query.outSpatialReference = _view.spatialReference;
-
-  const sublayerPromises = _mapImageLayer.sublayers.map((sublayer) => {
-    // Create a temporary FeatureLayer from each sublayer's URL to perform the query
-    const tempFeatureLayer = new FeatureLayer({
-      url: `${_mapImageLayer.url}/${sublayer.id}`,
-      definitionExpression: sublayer.definitionExpression // Apply any sublayer filters
-    });
-
-    return tempFeatureLayer.queryExtent(query).then((result) => {
-      if (result.extent) {
-        // Combine extents by expanding to include this sublayer's extent
-        if (combinedExtent) {
-          combinedExtent = combinedExtent.union(result.extent);
-        } else {
-          combinedExtent = result.extent.clone();
-        }
-      }
-    });
-  });
-
-  // Set the view extent once all sublayer extents have been gathered
-  Promise.all(sublayerPromises).then(() => {
-    if (combinedExtent) {
-      _view.goTo(combinedExtent);
-    }
-  });
-}
 // 根據使用者選擇的方案 篩選出對應坵塊圖層
 function toggleMapFarmingFrequency() {
   // console.log('##toggleMapFarmingFrequency');
   // if (this.ifDevByPassMap) return;
-  let landUsingFrequency = store.value.baseDataPlantingAreaPathPickedData.land_using_frequency
+  let landUsingFrequency = store.value.baseDataPlantingAreaPathPickedData?.land_using_frequency
 
   // //console.log('baseDataPlantingAreaPathPickedData: ', this.baseDataPlantingAreaPathPickedData);
   let _layer = toRaw(mapProfile.value.subLayers.farmingDensity);
+  if (!_layer) return;
 
   if (landUsingFrequency != null) {
     let _where = null;
@@ -359,8 +464,30 @@ function toggleMapFarmingFrequency() {
 }
 onMounted(() => {
   // console.log('## map mounted');
-  init()
+  mapStatus.value = 'idle';
 })
+function destroyMap() {
+  const view = toRaw(mapProfile.value.mapView);
+  if (view?.destroy) {
+    view.destroy();
+  }
+  mapProfile.value.mapView = null;
+  mapProfile.value.mapImageLayer = null;
+  mapProfile.value.subLayers = {};
+}
+onUnmounted(() => {
+  isDisposed = true;
+  destroyMap();
+})
+watch(
+  () => [
+    props.mapConfigs.showPlantingMound,
+    props.mapConfigs.showWaterGroup,
+    store.value.baseDataPlantingAreaPathPickedData?.land_using_frequency,
+    store.value.solutionUserPicked.irrigationCombination?.title,
+  ],
+  updateMapLayers
+)
 // watch([store.value.solutionUserPicked.irrigationCombination,store.value.userSettings.step2.baseDataPath.land_using_frequency],()=>{
 //     console.log("@@ solutionUserPicked.irrigationCombination is changed")
 //     alert("solutionUserPicked.irrigationCombination is changed")
@@ -371,9 +498,33 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.mapShell {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
 .mapView {
   width: 100%;
-  height: 100%;
   height: 500px;
+}
+.isHidden {
+  visibility: hidden;
+}
+.mapState {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #334155;
+  font-weight: 600;
+}
+.mapStateError {
+  color: #b91c1c;
 }
 </style>
